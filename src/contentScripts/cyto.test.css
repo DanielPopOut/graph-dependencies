@@ -1,0 +1,21 @@
+#cy {
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+#eat {
+  position: absolute;
+  left: 1em;
+  top: 1em;
+  font-size: 1em;
+  z-index: -1;
+  color: #c88;
+}
+
+body {
+  background-color: red;
+}
