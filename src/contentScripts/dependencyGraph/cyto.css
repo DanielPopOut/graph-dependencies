@@ -1,6 +1,7 @@
 #cy {
   height: 100%;
-  width: 50%;
+  width: 100%;
+  background-color: #dededebd;
   position: absolute;
   left: 0;
   top: 0;
@@ -17,5 +18,5 @@
 }
 
 body {
-  background-color: red;
+  /* background-color: red; */
 }

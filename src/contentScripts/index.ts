@@ -1,4 +1,3 @@
-import './cyto.test.css';
 import { COMMUNICATION_CONSTANTS } from '../shared/constants';
 import { generateCardsByUrl } from './generateCardsByUrl';
 import { getDependencies } from './getDependencies';

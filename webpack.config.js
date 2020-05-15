@@ -8,6 +8,7 @@ module.exports = {
   entry: {
     background: './src/background/background.js',
     graphdep: './src/contentScripts/index.ts',
+    test: './src/testing/index.ts',
   },
   devtool: 'inline-source-map',
   plugins: [

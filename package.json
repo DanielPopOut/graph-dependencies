@@ -4,10 +4,14 @@
   "description": "Dependency graph for trello",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "NODE_ENV=development npx webpack --watch"
+  },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.5.3",
+    "html-webpack-plugin": "^4.2.1",
     "style-loader": "^1.2.1",
     "ts-loader": "^7.0.1",
     "typescript": "^3.8.3",

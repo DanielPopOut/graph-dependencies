@@ -35,6 +35,10 @@ function getDependencies(callback) {
   });
 }
 
+chrome.tabs.onUpdated.addListener(function (request, sender, sendResponse) {
+  console.log('tabUpdated', request, sender, sendResponse);
+});
+
 // The onClicked callback function.
 function onClickHandler(info, tab) {
   if (info.menuItemId == 'radio1' || info.menuItemId == 'radio2') {
