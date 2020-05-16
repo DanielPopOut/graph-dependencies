@@ -2,6 +2,9 @@ import { createDependencyGraph } from '../contentScripts/dependencyGraph/createD
 import { cardDependenciesFixture } from '../contentScripts/fixtures/cardDependencies.fixture';
 import { cardsByCardUrlFixture } from '../contentScripts/fixtures/cardsByCardUrl.fixture';
 
-createDependencyGraph(cardDependenciesFixture, cardsByCardUrlFixture as any);
+export const createTestDependency = () => {
+  createDependencyGraph(cardDependenciesFixture, cardsByCardUrlFixture as any);
+};
 
-console.log('createDEpendencyGraph');
+//@ts-ignore
+globalThis.createTestDependency = createTestDependency;

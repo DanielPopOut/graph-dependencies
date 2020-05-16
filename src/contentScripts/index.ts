@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener(function (
   console.log(
     sender.tab
       ? 'from a content script:' + sender.tab.url
-      : 'from the extension',
+      : 'from the extension ',
   );
   console.log('new request came', request);
   switch (request.action) {
@@ -42,7 +42,7 @@ chrome.runtime.onMessage.addListener(function (
   }
 });
 
-console.log('im in');
+console.log('im in 2');
 
 // function showColumnDependenciesButton(listName) {
 //   console.log(

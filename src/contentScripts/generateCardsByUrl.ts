@@ -5,22 +5,26 @@ import { addDependantCard } from './actions/addDependantCard';
 import { updateCardText } from './actions/updateCardText';
 import { resetCardText } from './actions/resetCardText';
 import { cardsByCardUrl } from './index';
+import { getLists } from './getTasks/trello/getLists';
+import { getListData, addButtonToList } from './getTasks/trello/getListData';
+import { getCards } from './getTasks/trello/getCards';
+import { cardManager } from './getTasks/trello/cardManager';
 
 declare var $: any;
 let dependantCardUrl = '';
 
-function generateShowColumnDependenciesButton(listName: string) {
-  const button = document.createElement('button');
-  button.setAttribute('class', `div-graph-dep-action button-${listName}`);
-  button.innerHTML = BUTTON_TEXTS.SHOW_DEPENDENCIES;
-  button.id = listName;
-  button.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    generateListExtensionTree(listName);
-  });
-  return button;
-}
+// function generateShowColumnDependenciesButton(listName: string) {
+//   const button = document.createElement('button');
+//   button.setAttribute('class', `div-graph-dep-action button-${listName}`);
+//   button.innerHTML = BUTTON_TEXTS.SHOW_DEPENDENCIES;
+//   button.id = listName;
+//   button.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     generateListExtensionTree(listName);
+//   });
+//   return button;
+// }
 
 function onDependanceButtonClick(cardUrl: string) {
   console.log('all card', cardsByCardUrl);
@@ -60,55 +64,13 @@ function generateGraphDepActionSection(cardUrl: string) {
 }
 
 export function generateCardsByUrl(): { [x: string]: Card } {
-  console.log('here i gooooo');
+  console.log('here i gooooo gogo');
   let cardsByCardUrl: { [x: string]: Card } = {};
 
   $('.div-graph-dep-action').remove();
 
-  const lists = $('.js-list').map(function () {
-    const list = $(this).find('.list-header-name');
-    const listName = list.text();
-    const listButton = generateShowColumnDependenciesButton(listName);
-    $(listButton).insertAfter(list);
-
-    const cards = $(this)
-      .find('.list-card')
-      .map(function () {
-        const href = $(this).attr('href');
-        const [_, prefix, cardSlug, cardNumberAndName] = href
-          ? href.split('/')
-          : ['', '', 'fakeSlug', 'fakeNumber-fakeNaaaaame'];
-        // const cardUrl = prefix + '/' + cardSlug;
-        const cardUrl = cardSlug;
-        const [cardNumber, ...cardName] = cardNumberAndName.split('-');
-
-        const labels = $(this)
-          .find('.card-label')
-          .map(function () {
-            return {
-              classes: $(this).attr('class'),
-              text: $(this).find('.label-text').text(),
-            };
-          });
-
-        const { button, div } = generateGraphDepActionSection(cardUrl);
-        $(this).append(div);
-
-        const finalObj: Card = {
-          href,
-          cardUrl,
-          cardNumber,
-          cardName,
-          labels,
-          button,
-          listName,
-          children: new Set(),
-          dependencies: new Set(),
-        };
-        cardsByCardUrl[cardUrl] = finalObj;
-        return finalObj;
-      });
-  });
+  cardManager.refresh();
+  console.log(cardManager);
 
   return cardsByCardUrl;
 }
