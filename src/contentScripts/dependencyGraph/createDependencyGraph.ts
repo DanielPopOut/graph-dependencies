@@ -42,22 +42,14 @@ export function createDependencyGraph(
   const nodes = allCards.map((card) => {
     const completeCard = cardsByCardUrl[card.cardUrl];
     console.log(
-      decodeURI(
-        [
-          completeCard.cardNumber,
-          (completeCard.cardName as any).join(' '),
-        ].join(' '),
-      ),
+      decodeURI([completeCard.cardNumber, completeCard.cardName].join(' ')),
     );
     return {
       data: {
         id: card.cardUrl,
         ...completeCard,
         label: decodeURI(
-          [
-            completeCard.cardNumber,
-            (completeCard.cardName as any).join(' '),
-          ].join(' '),
+          [completeCard.cardNumber, completeCard.cardName].join(' '),
         ),
         // .replace(/(?!$|\n)([^\n]{32}(?!\n))/g, '$1\n'),
       },
@@ -89,7 +81,7 @@ export function createDependencyGraph(
     },
 
     layout: {
-      name: 'concentric',
+      name: 'breadthfirst',
       directed: true,
       padding: 40,
     },

@@ -15,7 +15,9 @@ class ActionsManager {
     );
     const ShowDependenciesButton = () => (
       <button
-        onClick={() => dependencyManager.getDependencies(cardManager.cardsById)}
+        onClick={() =>
+          dependencyManager.createDependencyGraph(cardManager.cardsById)
+        }
       >
         Show dependencies
       </button>

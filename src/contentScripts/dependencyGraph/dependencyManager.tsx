@@ -1,5 +1,6 @@
 import { cardManager } from '../getTasks/trello/cardManager';
 import { actionsManager } from '../actions/actionManager';
+import { createDependencyGraph } from './createDependencyGraph';
 
 class DependencyManager {
   getDependencies = (
@@ -28,6 +29,34 @@ class DependencyManager {
       });
     });
     actionsManager.refreshCardsActions();
+  };
+
+  generateDependencyTree = (cards: Record<string, ICard>) => {
+    const cardIdsToKeep = new Set(Object.keys(cards));
+
+    //Remove dependencies from cards when parent card is not in the list
+    const cardDependencies = Object.values(cards).reduce<
+      Record<string, CardDependency>
+    >((finalCardDependencies, card) => {
+      const cardDependencies = [
+        ...card.dependencies,
+      ].filter((dependencyCardId) => cardIdsToKeep.has(dependencyCardId));
+      const cardChildren = [...card.children].filter((childCardId) =>
+        cardIdsToKeep.has(childCardId),
+      );
+      finalCardDependencies[card.cardUrl] = {
+        cardUrl: card.cardUrl,
+        dependencies: cardDependencies,
+        children: cardChildren,
+      };
+      return finalCardDependencies;
+    }, {});
+
+    return cardDependencies;
+  };
+
+  createDependencyGraph = (cardsById: Record<string, ICard>) => {
+    createDependencyGraph(this.generateDependencyTree(cardsById), cardsById);
   };
 }
 
