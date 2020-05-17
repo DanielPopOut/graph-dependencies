@@ -19,6 +19,7 @@ chrome.runtime.onMessage.addListener(function (
   sender: any,
   sendResponse: any,
 ) {
+  console.log('we have babael 8');
   console.log(
     sender.tab
       ? 'from a content script:' + sender.tab.url
@@ -42,7 +43,7 @@ chrome.runtime.onMessage.addListener(function (
   }
 });
 
-console.log('im in 2');
+console.log('im in 2 wigh babel 8');
 
 // function showColumnDependenciesButton(listName) {
 //   console.log(

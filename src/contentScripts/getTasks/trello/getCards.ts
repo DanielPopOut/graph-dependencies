@@ -42,6 +42,7 @@ export const getCardDetails = (cardElement: Element, listName: string) => {
     listName,
     children: new Set(),
     dependencies: new Set(),
+    cardElement,
   };
   return card;
 };
