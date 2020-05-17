@@ -1,4 +1,4 @@
-export function getDependencies(cardsByCardUrl: Record<string, Card>) {
+export function getDependencies(cardsByCardUrl: Record<string, ICard>) {
   console.log('array to act on', cardsByCardUrl);
   return Object.entries(cardsByCardUrl).reduce(
     (finalDependencies, [cardUrl, cardByCardUrl]) => {

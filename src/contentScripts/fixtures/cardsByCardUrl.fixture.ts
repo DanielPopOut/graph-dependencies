@@ -1,6 +1,6 @@
 interface FixtureCard
   extends Omit<
-    Card,
+    ICard,
     'cardName' | 'children' | 'dependencies' | 'labels' | 'button'
   > {
   cardUrl: string;

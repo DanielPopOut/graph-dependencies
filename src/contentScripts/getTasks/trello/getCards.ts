@@ -1,13 +1,13 @@
 import { generateButton } from './generateButton';
 
-export const getCards = (listElements: List[]) => {
+export const getCards = (listElements: IList[]): ICard[] => {
   return listElements.reduce(
     (allCards, list) => [...allCards, ...getCardsFromList(list)],
     [],
   );
 };
 
-export const getCardsFromList = (list: List) => {
+export const getCardsFromList = (list: IList) => {
   const cardElements = list.listElement.querySelectorAll('.list-card');
   return [...cardElements].map((cardElement) =>
     getCardDetails(cardElement, list.name),
@@ -32,7 +32,7 @@ export const getCardDetails = (cardElement: Element, listName: string) => {
     },
   );
 
-  const card: Card = {
+  const card: ICard = {
     id: cardId,
     href,
     cardUrl,

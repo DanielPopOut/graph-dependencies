@@ -6,7 +6,7 @@ declare var $: any;
 
 export function createDependencyGraph(
   cardDependancies: Record<string, CardDependency>,
-  cardsByCardUrl: Record<string, Card>,
+  cardsByCardUrl: Record<string, ICard>,
 ) {
   console.log(cardDependancies, cardsByCardUrl);
   const allCards = Object.values(cardDependancies);

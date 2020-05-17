@@ -12,7 +12,7 @@ const {
   RENDER_DEPENDENCIES_ID,
 } = COMMUNICATION_CONSTANTS;
 
-export let cardsByCardUrl: Record<string, Card> = {};
+export let cardsByCardUrl: Record<string, ICard> = {};
 
 chrome.runtime.onMessage.addListener(function (
   request: any,

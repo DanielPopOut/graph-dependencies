@@ -3,7 +3,7 @@ import { resetCardText } from './resetCardText';
 declare var $: any;
 
 export function addDependantCard(
-  cardsByCardUrl: Record<string, Card>,
+  cardsByCardUrl: Record<string, ICard>,
   parentCardUrl: string,
   dependantCardUrl: string,
 ) {
@@ -16,19 +16,19 @@ export function addDependantCard(
   resetCardText(cardsByCardUrl);
 }
 
-function updateChildCard(card: Card, parentCardUrl: string) {
+function updateChildCard(card: ICard, parentCardUrl: string) {
   card.dependencies.add(parentCardUrl);
   console.log('update child', card);
 }
 
-function updateParentCard(card: Card, dependantCardUrl: string) {
+function updateParentCard(card: ICard, dependantCardUrl: string) {
   console.log('update parent');
   card.children.add(dependantCardUrl);
 }
 
 function rerenderCardWithDependencies(
-  card: Card,
-  cardsByCardUrl: Record<string, Card>,
+  card: ICard,
+  cardsByCardUrl: Record<string, ICard>,
 ) {
   const { cardUrl, dependencies } = card;
   const divToUdpate = $(`.div-${cardUrl}`)[0];
@@ -42,7 +42,7 @@ function rerenderCardWithDependencies(
   });
 }
 
-function generateDependencyLink(card: Card) {
+function generateDependencyLink(card: ICard) {
   const childLink = document.createElement('a');
   childLink.innerHTML = card.cardNumber;
   childLink.href = card.href;

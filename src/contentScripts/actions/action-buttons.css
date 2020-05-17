@@ -2,4 +2,18 @@
   margin-top: -11px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+  padding-bottom: 8px;
+}
+
+.dependency-tag {
+  margin: 0 3px;
+  padding: 5px;
+  background: #f5dd5c;
+  border-radius: 3px;
+  display: inline-flex;
+}
+
+.dependency-tag a {
+  text-decoration: none;
+  padding-right: 8px;
 }
