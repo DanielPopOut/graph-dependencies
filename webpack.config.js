@@ -21,9 +21,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
+        test: /\.(js|jsx|ts|tsx)$/,
+        exclude: /(node_modules)/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/env', '@babel/react'],
+          plugins: ['@babel/proposal-class-properties'],
+        },
       },
       {
         test: /\.css$/,
