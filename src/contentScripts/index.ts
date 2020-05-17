@@ -1,7 +1,6 @@
 import { COMMUNICATION_CONSTANTS } from '../shared/constants';
-import { getDependencies } from './getDependencies';
-import { renderDependencies } from './renderDependencies';
 import { actionsManager } from './actions/actionManager';
+import { dependencyManager } from './dependencyGraph/dependencyManager';
 
 declare var chrome: any;
 
@@ -30,12 +29,12 @@ chrome.runtime.onMessage.addListener(function (
       actionsManager.initializeActions();
       break;
     case SAVE_DEPENDENCIES_ID:
-      sendResponse(getDependencies(cardsByCardUrl));
+      sendResponse(dependencyManager.getDependencies());
       break;
     case RENDER_DEPENDENCIES_ID:
       const { dependencies } = request.data;
       actionsManager.initializeActions();
-      renderDependencies(dependencies);
+      dependencyManager.renderDependencies(dependencies);
       break;
     default:
       break;

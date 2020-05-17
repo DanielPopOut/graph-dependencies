@@ -1,6 +1,4 @@
-interface DependencyGraph {
-  [parentId: string]: string[];
-}
+type DependencyGraph = Record<string, string[]>;
 
 // {
 //     parentId : [childId1, childId2]

@@ -4,16 +4,27 @@ import './action-buttons.css';
 import { cardManager } from '../getTasks/trello/cardManager';
 import { cardService } from '../modules/cards/card.service';
 import { DependencyTag } from './components/DependencyTag';
+import { dependencyManager } from '../dependencyGraph/dependencyManager';
 
 class ActionsManager {
   dependencyCardId: string;
 
   addRefreshActionsButton = () => {
-    const refreshActionsButton = (
+    const RefreshActionsButton = () => (
       <button onClick={() => this.initializeActions()}>Refresh actions</button>
     );
+    const ShowDependenciesButton = () => (
+      <button
+        onClick={() => dependencyManager.getDependencies(cardManager.cardsById)}
+      >
+        Show dependencies
+      </button>
+    );
     ReactDOMAppendChild(
-      refreshActionsButton,
+      <>
+        <RefreshActionsButton />
+        <ShowDependenciesButton />
+      </>,
       document.querySelector('.board-header'),
       { className: 'refresh-action-div' },
     );
