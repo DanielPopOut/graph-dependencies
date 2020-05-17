@@ -17,3 +17,7 @@
   text-decoration: none;
   padding-right: 8px;
 }
+
+.refresh-action-div {
+  display: inline-flex;
+}

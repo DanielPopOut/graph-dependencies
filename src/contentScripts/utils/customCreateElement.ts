@@ -29,11 +29,6 @@ export const ReactDOMAppendChild = (
   divContainer.addEventListener('click', (e) => {
     e.preventDefault();
   });
-  divContainer.addEventListener('dblclick', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('dblclick');
-  });
   ReactDOM.render(element, divContainer);
   if (options?.insertAfter) {
     if (container.nextSibling) {

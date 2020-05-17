@@ -9,7 +9,24 @@ class ActionsManager {
   dependencyCardId: string;
 
   addRefreshActionsButton = () => {
-    return <div></div>;
+    const refreshActionsButton = (
+      <button onClick={() => this.initializeActions()}>Refresh actions</button>
+    );
+    ReactDOMAppendChild(
+      refreshActionsButton,
+      document.querySelector('.board-header'),
+      { className: 'refresh-action-div' },
+    );
+  };
+
+  initializeActions = () => {
+    document
+      .querySelectorAll('.div-graph-dep-action')
+      .forEach((el) => el.remove());
+    this.addRefreshActionsButton();
+    cardManager.refresh();
+    actionsManager.addListActions(cardManager.lists);
+    actionsManager.refreshCardsActions(cardManager.cards);
   };
 
   addListActions = (lists: IList[]) => {

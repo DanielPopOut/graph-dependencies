@@ -1,10 +1,9 @@
 import { COMMUNICATION_CONSTANTS } from '../shared/constants';
-import { generateCardsByUrl } from './generateCardsByUrl';
 import { getDependencies } from './getDependencies';
 import { renderDependencies } from './renderDependencies';
+import { actionsManager } from './actions/actionManager';
 
 declare var chrome: any;
-declare var $: any;
 
 const {
   REFRESH_CARD_ID,
@@ -28,14 +27,14 @@ chrome.runtime.onMessage.addListener(function (
   console.log('new request came', request);
   switch (request.action) {
     case REFRESH_CARD_ID:
-      cardsByCardUrl = generateCardsByUrl();
+      actionsManager.initializeActions();
       break;
     case SAVE_DEPENDENCIES_ID:
       sendResponse(getDependencies(cardsByCardUrl));
       break;
     case RENDER_DEPENDENCIES_ID:
       const { dependencies } = request.data;
-      cardsByCardUrl = generateCardsByUrl();
+      actionsManager.initializeActions();
       renderDependencies(dependencies);
       break;
     default:
@@ -43,20 +42,6 @@ chrome.runtime.onMessage.addListener(function (
   }
 });
 
-console.log('im in 2 wigh babel 8');
-
-// function showColumnDependenciesButton(listName) {
-//   console.log(
-//     Object.values(cardsByCardUrl).filter(card => card.listName === listName)
-//   );
-// }
-
-// function setDisplay() {
-//   const textCheck = document.createElement('button');
-//   textCheck.innerHTML = 'Yeah';
-//   textCheck.setAttribute(
-//     'style',
-//     'position:fixed; top: 0; right: 0; background: blue; z-index: 1;',
-//   );
-//   $('body').append(textCheck);
-// }
+window.addEventListener('load', function () {
+  actionsManager.addRefreshActionsButton();
+});
