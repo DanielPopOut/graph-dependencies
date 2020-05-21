@@ -1,7 +1,12 @@
 interface FixtureCard
   extends Omit<
     ICard,
-    'cardName' | 'children' | 'dependencies' | 'labels' | 'button' | 'cardElement'
+    | 'cardName'
+    | 'children'
+    | 'dependencies'
+    | 'labels'
+    | 'button'
+    | 'cardElement'
   > {
   cardUrl: string;
   href: string;
@@ -14,7 +19,7 @@ interface FixtureCard
   cardElement: any;
 }
 
-export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
+export const cardsByCardUrlFixture: Record<string, ICard> = {
   JX04ICcg: {
     id: 'JX04ICcg',
     href: '/c/JX04ICcg/37-test2',
@@ -24,9 +29,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
     labels: [],
     listName:
       'Améliorations #1 (Suite) de Carcam--&gt; Management du compte administrateur et des profils client',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set(['0rRWsAD7', 'ThF4X65L']),
+    dependencies: new Set([]),
   },
   ThF4X65L: {
     id: 'ThF4X65L',
@@ -47,9 +51,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
     ],
     listName:
       'Améliorations #1 (Suite) de Carcam--&gt; Management du compte administrateur et des profils client',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set([]),
+    dependencies: new Set(['JX04ICcg']),
   },
   ua7dNWIF: {
     id: 'ua7dNWIF',
@@ -60,9 +63,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
     labels: [],
     listName:
       'Améliorations #1 (Suite) de Carcam--&gt; Management du compte administrateur et des profils client',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set(['0rRWsAD7']),
+    dependencies: new Set([]),
   },
   '0rRWsAD7': {
     id: '0rRWsAD7',
@@ -73,16 +75,15 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
     labels: [],
     listName:
       'Améliorations #2--&gt; Facilitations de reservation pour le client et nouveau mode de reservation.',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set(['V2RSbke5']),
+    dependencies: new Set(['JX04ICcg', 'ua7dNWIF']),
   },
   VQvxQsbr: {
     id: 'VQvxQsbr',
     href: '/c/VQvxQsbr/21-3-ajout-dimage',
     cardUrl: 'VQvxQsbr',
     cardNumber: '21',
-    cardName: '3 ajout d image avec du texte supplémentaire pour tester affichage de mes données et du TEXTE EN PLUS',
+    cardName: '3 ajout dimage',
     labels: [
       {
         classes: 'card-label card-label-orange mod-card-front',
@@ -90,9 +91,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
       },
     ],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set([]),
+    dependencies: new Set(['TYFjIPhS']),
   },
   TYFjIPhS: {
     id: 'TYFjIPhS',
@@ -102,9 +102,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
     cardName: '2 ajouter sections pour lajout dimage',
     labels: [],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set(['VQvxQsbr']),
+    dependencies: new Set(['V2RSbke5']),
   },
   AnadU5OE: {
     id: 'AnadU5OE',
@@ -114,9 +113,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
     cardName: 'sqdad',
     labels: [],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set([]),
+    dependencies: new Set(['V2RSbke5']),
   },
   V2RSbke5: {
     id: 'V2RSbke5',
@@ -126,9 +124,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
     cardName: 'etablir un plan de communication avant le 18 11 2019',
     labels: [],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set(['TYFjIPhS', 'AnadU5OE']),
+    dependencies: new Set(['0rRWsAD7']),
   },
   oVHT9cuh: {
     id: 'oVHT9cuh',
@@ -151,9 +148,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
       },
     ],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set([]),
+    dependencies: new Set([]),
   },
   fL84qWIK: {
     id: 'fL84qWIK',
@@ -162,12 +158,11 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
     cardUrl: 'fL84qWIK',
     cardNumber: '32',
     cardName:
-      'quand on duplique on ne peut pas modifier les photos am%C3%A9liorer et texte en plus pour voir affichage avec une ligne en plus',
+      'quand on duplique on ne peut pas modifier les photos am%C3%A9liorer',
     labels: [],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set([]),
+    dependencies: new Set([]),
   },
   WLA5CFEw: {
     id: 'WLA5CFEw',
@@ -177,9 +172,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
     cardName: 'analytics sur le site',
     labels: [],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set([]),
+    dependencies: new Set([]),
   },
   '9G0l1PVN': {
     id: '9G0l1PVN',
@@ -196,9 +190,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
       },
     ],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set([]),
+    dependencies: new Set([]),
   },
   d689qPjT: {
     id: 'd689qPjT',
@@ -213,9 +206,8 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
       },
     ],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set([]),
+    dependencies: new Set([]),
   },
   EgMg2qGP: {
     id: 'EgMg2qGP',
@@ -227,8 +219,7 @@ export const cardsByCardUrlFixture: Record<string, FixtureCard> = {
       'cr%C3%A9er des comptes twitter r%C3%A9diger des articles chaque jour sur le compte facebook questions %C3%A0 lire',
     labels: [],
     listName: 'ToValidate',
-    children: {},
-    dependencies: {},
-    cardElement: {},
+    children: new Set([]),
+    dependencies: new Set([]),
   },
 };

@@ -1,5 +1,5 @@
 interface CardDependency {
-  cardUrl: string;
+  id: string;
   dependencies: string[];
   children: string[];
 }

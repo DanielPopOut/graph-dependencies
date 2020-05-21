@@ -1,9 +1,10 @@
 import { createDependencyGraph } from '../contentScripts/dependencyGraph/createDependencyGraph';
 import { cardDependenciesFixture } from '../contentScripts/fixtures/cardDependencies.fixture';
 import { cardsByCardUrlFixture } from '../contentScripts/fixtures/cardsByCardUrl.fixture';
+import { dependencyManager } from '../contentScripts/dependencyGraph/dependencyManager';
 
 export const createTestDependency = () => {
-  createDependencyGraph(cardDependenciesFixture, cardsByCardUrlFixture as any);
+  dependencyManager.createDependencyGraph(cardsByCardUrlFixture);
 };
 
 //@ts-ignore
