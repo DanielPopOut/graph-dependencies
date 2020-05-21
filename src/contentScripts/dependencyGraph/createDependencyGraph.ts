@@ -3,6 +3,7 @@ import './buttons.css';
 import cytoscape from 'cytoscape';
 import cyCanvas from 'cytoscape-canvas';
 import { drawingHelper } from './drawingHelper';
+import { calculateCardHeight } from './textWidthHelper';
 
 cyCanvas(cytoscape); // Register extension
 
@@ -45,12 +46,13 @@ export function createDependencyGraph(
     const completeCard = cardsByCardUrl[card.cardUrl];
     return {
       data: {
-        id: card.cardUrl,
+        id: completeCard.id,
         ...completeCard,
         cardName: decodeURI(completeCard.cardName),
         label: decodeURI(
           [completeCard.cardNumber, completeCard.cardName].join(' '),
         ),
+        height: calculateCardHeight(completeCard.cardName),
       },
       classes: 'center-center',
     };
@@ -59,8 +61,7 @@ export function createDependencyGraph(
   var cy = cytoscape({
     container: document.getElementById('cy'),
 
-    boxSelectionEnabled: false,
-    autounselectify: true,
+    boxSelectionEnabled: true,
 
     style: jsonStyle,
 
@@ -130,7 +131,7 @@ const jsonStyle = [
   {
     selector: 'node',
     style: {
-      height: 50,
+      height: 'data(height)',
       width: 200,
       shape: 'rectangle',
       'background-opacity': '0',
@@ -164,6 +165,9 @@ const jsonStyle = [
     selector: 'node:selected',
     style: {
       'background-color': 'blue',
+      'background-opacity': '0.5',
+      width: 230,
+      height: 'data(height)',
       'target-arrow-color': '#000',
       'text-outline-color': '#000',
     },

@@ -53,13 +53,11 @@ class DrawingHelper {
       ctx,
       data.cardName,
       w,
-      50,
-      data.cardNumber,
+      50
     );
-    const h = (fontSize * numberOfTextLines * 1.25) ;
+    const h = fontSize * numberOfTextLines * 1.25;
     const [topLeftX, topLeftY] = [x - w / 2, y - h / 2];
 
-    // console.log(data.cardNumber, data.cardName,'width calculated', h, numberOfTextLines );
     this.roundRect({
       x: topLeftX - padding,
       y: topLeftY - padding,
@@ -151,7 +149,6 @@ class DrawingHelper {
     text: string,
     maxWidth: number,
     firstLinePadding: number = 0,
-    card?: any,
   ) => {
     let words = text.split(' ');
     let line = '';
