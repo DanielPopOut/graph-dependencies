@@ -37,7 +37,7 @@ export const getCardDetails = (cardElement: Element, listName: string) => {
     href,
     cardUrl,
     cardNumber,
-    cardName: cardName.join(''),
+    cardName: cardName.join(' '),
     labels,
     listName,
     children: new Set(),
