@@ -43,9 +43,6 @@ export function createDependencyGraph(
 
   const nodes = allCards.map((card) => {
     const completeCard = cardsByCardUrl[card.cardUrl];
-    console.log(
-      decodeURI([completeCard.cardNumber, completeCard.cardName].join(' ')),
-    );
     return {
       data: {
         id: card.cardUrl,

@@ -169,7 +169,6 @@ class DrawingHelper {
             : maxWidth) &&
         n > 0
       ) {
-        console.log(card, linesNumber, line, testLine, testWidth);
         line = words[n] + ' ';
         isFirstLine = false;
         linesNumber += 1;
