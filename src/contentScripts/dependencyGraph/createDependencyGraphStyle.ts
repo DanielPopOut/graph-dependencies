@@ -13,7 +13,16 @@ export const jsonStyle = [
     selector: 'edge',
     style: {
       'curve-style': 'bezier',
-      'target-arrow-shape': 'triangle'
+        width: 4,
+      'target-arrow-shape': 'triangle',
+    },
+  },
+  {
+    selector: 'edge:selected',
+    style: {
+      'curve-style': 'bezier',
+      width: 6,
+      'target-arrow-shape': 'triangle',
     },
   },
   {

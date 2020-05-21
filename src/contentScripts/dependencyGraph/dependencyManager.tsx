@@ -79,6 +79,12 @@ class DependencyManager {
     });
   };
 
+  createEdgeData = (sourceId: string, targetId: string) => ({
+    id: `${sourceId}-${targetId}`,
+    source: sourceId,
+    target: targetId,
+  });
+
   computeNodesAndEdges = (cardsById: Record<string, ICard>) => {
     const cardDependencies = this.generateDependencyTree(cardsById);
     const allCards = Object.values(cardsById);
@@ -100,16 +106,20 @@ class DependencyManager {
     const edges = allCards.reduce((final, card) => {
       final.push(
         ...[...card.children].map((childCardID: string) => ({
-          data: {
-            id: `${card.id}-${cardDependencies[childCardID].id}`,
-            source: card.id,
-            target: cardDependencies[childCardID].id,
-          },
+          data: this.createEdgeData(card.id, cardDependencies[childCardID].id),
         })),
       );
       return final;
     }, []);
     return { nodes, edges };
+  };
+
+  addDependency = (parentCardId: string, childCardId: string) => {
+    return this.createEdgeData(parentCardId, childCardId);
+  };
+
+  removeDependency = (parentCardId: string, childCardId: string) => {
+    return;
   };
 
   createDependencyGraph = (cardsById: Record<string, ICard>) => {

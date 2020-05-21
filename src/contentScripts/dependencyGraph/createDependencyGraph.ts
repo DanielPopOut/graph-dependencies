@@ -4,6 +4,7 @@ import cytoscape from 'cytoscape';
 import cyCanvas from 'cytoscape-canvas';
 import { drawingHelper } from './drawingHelper';
 import { jsonStyle } from './createDependencyGraphStyle';
+import { dependencyManager } from './dependencyManager';
 
 cyCanvas(cytoscape); // Register extension
 
@@ -47,19 +48,27 @@ export function createDependencyGraph({
         alert(
           'You have to select at least one card to create a dependency with ctrl+click',
         );
+      } else {
+        const edgesToAdd = selectedNodes.map((node: any) => {
+          return {group: 'edges', data: dependencyManager.addDependency(selectedNode.data().id, node.data.id)}
+        });
+        cy.add(edgesToAdd);
       }
+      //This line prevent the element to be selected if clicked with ctrlKey
       cy.$(`#${selectedNode.data().id}`).select();
     }
-
-    console.log(
-      'tapped ' + selectedNode.id(),
-      evt,
-      selectedNode.selected(),
-      selectedNode.selectable(),
-      selectedNode,
-      selectedNode?.data(),
-    );
   });
+
+  cy.on('tap', 'edge', function (evt: {
+    target: any;
+    originalEvent: MouseEvent;
+  }) {
+    const selectedEdge = evt.target;
+    if (evt.originalEvent.ctrlKey) {
+      dependencyManager.removeDependency(selectedEdge.data().source, selectedEdge.data().target)
+      selectedEdge.remove();
+    }
+    });
 
   cy.on('render cyCanvas.resize', (evt: any) => {
     bottomLayer.resetTransform(ctx);
