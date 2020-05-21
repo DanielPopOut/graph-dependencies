@@ -27,21 +27,6 @@ export function createDependencyGraph(
 
   document.querySelector('body').append(div);
 
-  console.log('calculated', {
-    nodes: allCards.map((card) => ({ data: { id: card.cardUrl } })),
-    edges: allCards.reduce((final, card) => {
-      final.push(
-        ...card.children.map((childCardID) => ({
-          data: {
-            source: card.cardUrl,
-            target: cardDependancies[childCardID].cardUrl,
-          },
-        })),
-      );
-      return final;
-    }, []),
-  }, cardsByCardUrl);
-
   const nodes = allCards.map((card) => {
     const completeCard = cardsByCardUrl[card.cardUrl];
     return {
@@ -60,7 +45,6 @@ export function createDependencyGraph(
 
   var cy = cytoscape({
     container: document.getElementById('cy'),
-
     boxSelectionEnabled: true,
 
     style: jsonStyle,
@@ -93,11 +77,30 @@ export function createDependencyGraph(
   const canvas = bottomLayer.getCanvas();
   const ctx = canvas.getContext('2d');
 
-  cy.on('tap', 'node', function (evt: any) {
-    var node = evt.target;
+  cy.on('tap', 'node', function (evt: {
+    target: any;
+    originalEvent: MouseEvent;
+  }) {
+    const selectedNode = evt.target;
     // node.data();
-    node.data().cardNumber= '15';
-    console.log('tapped ' + node.id(), node, node?.data());
+    if (evt.originalEvent.ctrlKey) {
+      const selectedNodes = cy.$(':selected').jsons();
+      if (!selectedNodes.length) {
+        alert(
+          'You have to select at least one card to create a dependency with ctrl+click',
+        );
+      }
+      // cy.$(`#${selectedNode.data().id}`).select();
+    }
+
+    console.log(
+      'tapped ' + selectedNode.id(),
+      evt,
+      selectedNode.selected(),
+      selectedNode.selectable(),
+      selectedNode,
+      selectedNode?.data(),
+    );
   });
 
   cy.on('render cyCanvas.resize', (evt: any) => {
@@ -109,7 +112,7 @@ export function createDependencyGraph(
 
     // Draw shadows under nodes
     ctx.shadowBlur = 0;
-    ctx.shadowColor = 'rgba(9,30,66,.25)'
+    ctx.shadowColor = 'rgba(9,30,66,.25)';
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 1;
     ctx.fillStyle = 'white';
