@@ -1,8 +1,10 @@
 import './cyto.css';
 import './buttons.css';
+import cytoscape from 'cytoscape';
+import cyCanvas from 'cytoscape-canvas';
+import { drawingHelper } from './drawingHelper';
 
-declare var cytoscape: any;
-declare var $: any;
+cyCanvas(cytoscape); // Register extension
 
 export function createDependencyGraph(
   cardDependancies: Record<string, CardDependency>,
@@ -11,18 +13,18 @@ export function createDependencyGraph(
   console.log(cardDependancies, cardsByCardUrl);
   const allCards = Object.values(cardDependancies);
   // photos from flickr with creative commons license
-  $('#cy').remove();
+  document.querySelector('#cy')?.remove();
   const div = document.createElement('div');
   div.id = 'cy';
   const closeDiv = document.createElement('div');
   closeDiv.innerHTML = 'Fermer';
   closeDiv.classList.add('close-button');
   closeDiv.addEventListener('click', (e) => {
-    $('#cy').remove();
+    document.querySelector('#cy').remove();
   });
   div.append(closeDiv);
 
-  $('body').append(div);
+  document.querySelector('body').append(div);
 
   console.log('calculated', {
     nodes: allCards.map((card) => ({ data: { id: card.cardUrl } })),
@@ -37,7 +39,7 @@ export function createDependencyGraph(
       );
       return final;
     }, []),
-  });
+  }, cardsByCardUrl);
 
   const nodes = allCards.map((card) => {
     const completeCard = cardsByCardUrl[card.cardUrl];
@@ -48,10 +50,10 @@ export function createDependencyGraph(
       data: {
         id: card.cardUrl,
         ...completeCard,
+        cardName: decodeURI(completeCard.cardName),
         label: decodeURI(
           [completeCard.cardNumber, completeCard.cardName].join(' '),
         ),
-        // .replace(/(?!$|\n)([^\n]{32}(?!\n))/g, '$1\n'),
       },
       classes: 'center-center',
     };
@@ -87,9 +89,43 @@ export function createDependencyGraph(
     },
   }); // cy init
 
+  const bottomLayer = cy.cyCanvas({
+    zIndex: 1,
+  });
+  const canvas = bottomLayer.getCanvas();
+  const ctx = canvas.getContext('2d');
+
   cy.on('tap', 'node', function (evt: any) {
     var node = evt.target;
-    console.log('tapped ' + node.id());
+    // node.data();
+    node.data().cardNumber= '15';
+    console.log('tapped ' + node.id(), node, node?.data());
+  });
+
+  cy.on('render cyCanvas.resize', (evt: any) => {
+    bottomLayer.resetTransform(ctx);
+    bottomLayer.clear(ctx);
+    bottomLayer.setTransform(ctx);
+
+    ctx.save();
+
+    // Draw shadows under nodes
+    ctx.shadowBlur = 0;
+    ctx.shadowColor = 'rgba(9,30,66,.25)'
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 1;
+    ctx.fillStyle = 'white';
+    cy.nodes().forEach((node: any) => {
+      const { x, y } = node.position();
+      ctx.beginPath();
+      drawingHelper.drawCard(x, y, node.data(), ctx);
+    });
+    ctx.restore();
+
+    // Draw text that is fixed in the canvas
+    bottomLayer.resetTransform(ctx);
+    ctx.save();
+    ctx.restore();
   });
 }
 
@@ -97,13 +133,11 @@ const jsonStyle = [
   {
     selector: 'node',
     style: {
-      height: 150,
-      width: 255,
+      height: 50,
+      width: 200,
       shape: 'rectangle',
-      'background-color': '#fff',
+      'background-opacity': '0',
       'border-radius': '3px',
-      // 'background-image':
-      //   'https://cdn.rawgit.com/mafar/svg-test/9d252c09/dropshadow.svg',
     },
   },
   {
@@ -124,25 +158,15 @@ const jsonStyle = [
     },
   },
   {
-    selector: 'node[label]',
-    style: {
-      label: 'data(label)',
-      'text-wrap': 'wrap',
-      'text-max-width': 250,
-      'font-weight': 700,
-      'font-size': 24,
-    },
-  },
-  {
     selector: 'node::grabbed',
     style: {
-      background: '#be0',
+      background: 'red',
     },
   },
   {
     selector: 'node:selected',
     style: {
-      'background-color': '#d67614',
+      'background-color': 'blue',
       'target-arrow-color': '#000',
       'text-outline-color': '#000',
     },
@@ -150,7 +174,7 @@ const jsonStyle = [
   {
     selector: 'node:active',
     style: {
-      'overlay-color': '#b0a',
+      'overlay-color': 'red',
       'overlay-padding': '14',
     },
   },

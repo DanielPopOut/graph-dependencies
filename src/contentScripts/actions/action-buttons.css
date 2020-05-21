@@ -21,3 +21,7 @@
 .refresh-action-div {
   display: inline-flex;
 }
+
+.refresh-action-div > *:not(:first-child) {
+  margin-left: 10px;
+}
