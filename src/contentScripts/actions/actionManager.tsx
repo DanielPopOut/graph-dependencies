@@ -79,7 +79,8 @@ class ActionsManager {
       .forEach((el) => el.remove());
     this.addRefreshActionsButton();
     cardManager.refresh();
-    actionsManager.addListActions(cardManager.lists);
+    // TODO : update actions behind addListActions
+    // actionsManager.addListActions(cardManager.lists);
     actionsManager.refreshCardsActions(cardManager.cards);
   };
 
