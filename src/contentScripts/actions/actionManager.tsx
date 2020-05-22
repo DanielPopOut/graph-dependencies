@@ -34,7 +34,7 @@ class ActionsManager {
           const dependencyToSave = dependencyManager.getDependencies();
           chrome.storage.local.set(
             { [STORAGE_KEYS.DEPENDENCIES]: dependencyToSave },
-            function () {
+            ()=> {
               this.copyDependenciesToClipboard(
                 JSON.stringify(dependencyToSave),
               );
@@ -49,17 +49,16 @@ class ActionsManager {
     const RestoreDependencies = () => (
       <button
         onClick={() => {
-          chrome.storage.local.get([STORAGE_KEYS.DEPENDENCIES], function (
+          chrome.storage.local.get([STORAGE_KEYS.DEPENDENCIES], (
             result: any,
-          ) {
-            // const { dependencies } = request.data;
-            // actionsManager.initializeActions();
-            // dependencyManager.renderDependencies(dependencies);
-            console.log('Value currently is ' + result.key, result);
+          )=> {
+            const dependencies = result[STORAGE_KEYS.DEPENDENCIES] || {};
+            this.initializeActions();
+            dependencyManager.renderDependencies(dependencies);
           });
         }}
       >
-        Restore amigo
+        Restore
       </button>
     );
     ReactDOMAppendChild(
@@ -121,6 +120,7 @@ class ActionsManager {
           </button>
           {Array.from(card.dependencies).map((dependencyId) => (
             <DependencyTag
+              key={cardManager.cardsById[dependencyId].id}
               card={cardManager.cardsById[dependencyId]}
               onClose={() => {
                 cardManager.removeDependency(card.id, dependencyId);
