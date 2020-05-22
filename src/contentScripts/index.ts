@@ -41,6 +41,13 @@ chrome.runtime.onMessage.addListener(function (
   }
 });
 
-window.addEventListener('load', function () {
+
+if (document.readyState == 'loading') {
+  // loading yet, wait for the event
+  document.addEventListener('DOMContentLoaded',  function () {
+    actionsManager.addRefreshActionsButton();
+  });
+} else {
+  // DOM is ready!
   actionsManager.addRefreshActionsButton();
-});
+}
