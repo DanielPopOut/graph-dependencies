@@ -1,22 +1,16 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const ExtensionReloader = require('webpack-extension-reloader');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: {
-    background: './src/background/background.js',
     graphdep: './src/contentScripts/index.ts',
-    test: './src/testing/index.ts',
   },
   devtool: 'inline-source-map',
   plugins: [
-    // new CleanWebpackPlugin(),
-    new ExtensionReloader({
-      manifest: path.resolve(__dirname, 'dist/manifest.json'),
-    }),
-    new CopyPlugin([{ from: 'public', to: '' }]),
+    new CleanWebpackPlugin(),
+    new CopyPlugin([{ from: 'public/logo' }, { from: 'public/manifest.json' }]),
   ],
   module: {
     rules: [
@@ -40,6 +34,6 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
-  },
+    path: path.resolve(__dirname, 'dist-prod'),
+  }
 };

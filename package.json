@@ -5,7 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development npx webpack --watch"
+    "dev": "NODE_ENV=development npx webpack --config webpack.development.config.js --watch",
+    "build:prod": "NODE_ENV=production npx webpack --config webpack.production.config.js"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
