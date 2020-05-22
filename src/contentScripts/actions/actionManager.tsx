@@ -6,6 +6,12 @@ import { cardService } from '../modules/cards/card.service';
 import { DependencyTag } from './components/DependencyTag';
 import { dependencyManager } from '../dependencyGraph/dependencyManager';
 
+declare var chrome;
+
+const STORAGE_KEYS = {
+  DEPENDENCIES: 'DEPENDENCIES_SAVED',
+};
+
 class ActionsManager {
   dependencyCardId: string;
 
@@ -22,10 +28,46 @@ class ActionsManager {
         Show dependencies
       </button>
     );
+    const SaveDependencies = () => (
+      <button
+        onClick={() => {
+          const dependencyToSave = dependencyManager.getDependencies();
+          chrome.storage.local.set(
+            { [STORAGE_KEYS.DEPENDENCIES]: dependencyToSave },
+            function () {
+              this.copyDependenciesToClipboard(
+                JSON.stringify(dependencyToSave),
+              );
+              alert('Dependencies saved and copied to clipboard');
+            },
+          );
+        }}
+      >
+        Save
+      </button>
+    );
+    const RestoreDependencies = () => (
+      <button
+        onClick={() => {
+          chrome.storage.local.get([STORAGE_KEYS.DEPENDENCIES], function (
+            result: any,
+          ) {
+            // const { dependencies } = request.data;
+            // actionsManager.initializeActions();
+            // dependencyManager.renderDependencies(dependencies);
+            console.log('Value currently is ' + result.key, result);
+          });
+        }}
+      >
+        Restore amigo
+      </button>
+    );
     ReactDOMAppendChild(
       <>
         <RefreshActionsButton />
         <ShowDependenciesButton />
+        <SaveDependencies />
+        <RestoreDependencies />
       </>,
       document.querySelector('.board-header'),
       { className: 'refresh-action-div' },
@@ -103,6 +145,28 @@ class ActionsManager {
     } else {
       cardManager.addDependency(this.dependencyCardId, cardId);
       this.dependencyCardId = '';
+    }
+  };
+
+  copyDependenciesToClipboard = (str: string) => {
+    // Code from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+    const el = document.createElement('textarea'); // Create a <textarea> element
+    el.value = str; // Set its value to the string that you want copied
+    el.setAttribute('readonly', ''); // Make it readonly to be tamper-proof
+    el.style.position = 'absolute';
+    el.style.left = '-9999px'; // Move outside the screen to make it invisible
+    document.body.appendChild(el); // Append the <textarea> element to the HTML document
+    const selected =
+      document.getSelection().rangeCount > 0 // Check if there is any content selected previously
+        ? document.getSelection().getRangeAt(0) // Store selection if found
+        : false; // Mark as false to know no selection existed before
+    el.select(); // Select the <textarea> content
+    document.execCommand('copy'); // Copy - only works as a result of a user action (e.g. click events)
+    document.body.removeChild(el); // Remove the <textarea> element
+    if (selected) {
+      // If a selection existed before copying
+      document.getSelection().removeAllRanges(); // Unselect everything on the HTML document
+      document.getSelection().addRange(selected); // Restore the original selection
     }
   };
 }
