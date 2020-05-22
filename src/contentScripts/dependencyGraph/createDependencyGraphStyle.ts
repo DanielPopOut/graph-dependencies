@@ -6,7 +6,6 @@ export const jsonStyle = [
       width: 200,
       shape: 'rectangle',
       'background-opacity': '0',
-      'border-radius': '3px',
     },
   },
   {
@@ -23,13 +22,6 @@ export const jsonStyle = [
       'curve-style': 'bezier',
       width: 6,
       'target-arrow-shape': 'triangle',
-    },
-  },
-  {
-    selector: 'center-center',
-    style: {
-      'text-valign': 'center',
-      'text-halign': 'center',
     },
   },
   {
