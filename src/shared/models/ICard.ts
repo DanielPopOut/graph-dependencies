@@ -1,7 +1,6 @@
 interface ICard {
   id?: string;
   cardElement?: Element;
-  cardUrl: string;
   href: string;
   cardNumber: string;
   cardName: string;

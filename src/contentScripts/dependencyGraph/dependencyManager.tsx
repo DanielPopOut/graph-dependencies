@@ -89,7 +89,7 @@ class DependencyManager {
     const cardDependencies = this.generateDependencyTree(cardsById);
     const allCards = Object.values(cardsById);
     const nodes = allCards.map((card) => {
-      const completeCard = cardsById[card.cardUrl];
+      const completeCard = cardsById[card.id];
       return {
         data: {
           id: completeCard.id,

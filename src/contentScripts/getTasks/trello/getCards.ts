@@ -19,8 +19,6 @@ export const getCardDetails = (cardElement: Element, listName: string) => {
   const [_, prefix, cardId, cardNumberAndName] = href
     ? href.split('/')
     : ['', '', 'noCardSlug', 'noNumber - noName'];
-  // const cardUrl = prefix + '/' + cardSlug;
-  const cardUrl = cardId;
   const [cardNumber, ...cardName] = cardNumberAndName.split('-');
 
   const labels = [...cardElement.querySelectorAll('.card-label')].map(
@@ -35,7 +33,6 @@ export const getCardDetails = (cardElement: Element, listName: string) => {
   const card: ICard = {
     id: cardId,
     href,
-    cardUrl,
     cardNumber,
     cardName: cardName.join(' '),
     labels,

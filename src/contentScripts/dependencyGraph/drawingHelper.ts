@@ -1,5 +1,4 @@
 import { COLOR_USAGES } from './drawingHelper.constants';
-import { Card } from '../../shared/models/card.model';
 
 class DrawingHelper {
   roundRect = ({
@@ -44,7 +43,7 @@ class DrawingHelper {
       ctx.fillText(text, x, y + h);
     }
   };
-  drawCard = (x: number, y: number, data: Card, ctx: any) => {
+  drawCard = (x: number, y: number, data: ICard, ctx: any) => {
     const fontSize = 18;
     ctx.font = `${fontSize}px Helvetica`;
     const padding = 4;
@@ -53,7 +52,7 @@ class DrawingHelper {
       ctx,
       data.cardName,
       w,
-      50
+      50,
     );
     const h = fontSize * numberOfTextLines * 1.25;
     const [topLeftX, topLeftY] = [x - w / 2, y - h / 2];

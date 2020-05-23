@@ -1,21 +1,21 @@
 export const cardDependenciesFixture: Record<string, CardDependency> = {
   VQvxQsbr: {
-    cardUrl: 'VQvxQsbr',
+    id: 'VQvxQsbr',
     dependencies: [],
     children: [],
   },
   TYFjIPhS: {
-    cardUrl: 'TYFjIPhS',
+    id: 'TYFjIPhS',
     dependencies: [],
     children: ['VQvxQsbr'],
   },
   oVHT9cuh: {
-    cardUrl: 'oVHT9cuh',
+    id: 'oVHT9cuh',
     dependencies: [],
     children: ['VQvxQsbr'],
   },
   fL84qWIK: {
-    cardUrl: 'fL84qWIK',
+    id: 'fL84qWIK',
     dependencies: [],
     children: [],
   },
