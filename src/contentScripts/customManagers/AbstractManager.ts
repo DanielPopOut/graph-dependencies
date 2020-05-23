@@ -1,33 +1,26 @@
-import { getLists } from './getLists';
-import { getCards } from './getCards';
-
-class CardManager {
+export abstract class AbstractManager {
   lists: IList[] = [];
   cardsById: Record<string, ICard> = {};
-  dependencyCardId: string;
+  abstract insertElementForActionSelector: string;
 
   get cards() {
     return Object.values(this.cardsById);
   }
 
-  refresh = () => {
-    this.getLists();
-    this.getCards();
-  };
+  // Here are the functions to update lists and cards
+  abstract getLists: () => IList[];
+  abstract getCards: () => ICard[];
 
-  getLists = () => {
-    this.lists = getLists();
-  };
-
-  getCards = () => {
-    this.cardsById = getCards(this.lists).reduce(
+  refresh() {
+    this.lists = this.getLists();
+    this.cardsById = this.getCards().reduce(
       (cardsByIdAccumulator, card) => ({
         ...cardsByIdAccumulator,
         [card.id]: card,
       }),
       {},
     );
-  };
+  }
 
   addDependency = (childCardId: string, parentCardId: string) => {
     this.cardsById[childCardId].dependencies.add(parentCardId);
@@ -39,4 +32,3 @@ class CardManager {
     this.cardsById[parentCardId].children.delete(childCardId);
   };
 }
-export const cardManager = new CardManager();

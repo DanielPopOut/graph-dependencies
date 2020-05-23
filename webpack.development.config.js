@@ -9,6 +9,8 @@ module.exports = {
     background: './src/background/background.js',
     graphdep: './src/contentScripts/index.ts',
     test: './src/testing/index.ts',
+    githubManager: './src/contentScripts/customManagers/GithubManager.ts',
+    trelloManager: './src/contentScripts/customManagers/TrelloManager.ts',
   },
   devtool: 'inline-source-map',
   plugins: [

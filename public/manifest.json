@@ -1,6 +1,6 @@
 {
   "name": "Graph dependency",
-  "version": "2.0",
+  "version": "1.3",
   "description": "Create a simple graph dep on trello",
   "icons": {
     "16": "logo-16.png",
@@ -13,9 +13,11 @@
   "content_scripts": [
     {
       "matches": ["*://*.trello.com/*"],
-      "js": [
-        "graphdep.js"
-      ]
+      "js": ["trelloManager.js", "graphdep.js"]
+    },
+    {
+      "matches": ["*://github.com/*/projects/*"],
+      "js": ["githubManager.js", "graphdep.js"]
     }
   ]
 }

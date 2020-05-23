@@ -1,12 +1,13 @@
 import React from 'react';
 import { ReactDOMAppendChild } from '../utils/customCreateElement';
 import './action-buttons.css';
-import { cardManager } from '../getTasks/trello/cardManager';
 import { cardService } from '../modules/cards/card.service';
 import { DependencyTag } from './components/DependencyTag';
 import { dependencyManager } from '../dependencyGraph/dependencyManager';
+import { AbstractManager } from '../customManagers/AbstractManager';
 
-declare var chrome;
+declare var chrome: any;
+declare var cardManager: AbstractManager;
 
 const STORAGE_KEYS = {
   DEPENDENCIES: 'DEPENDENCIES_SAVED',
@@ -34,7 +35,7 @@ class ActionsManager {
           const dependencyToSave = dependencyManager.getDependencies();
           chrome.storage.local.set(
             { [STORAGE_KEYS.DEPENDENCIES]: dependencyToSave },
-            ()=> {
+            () => {
               this.copyDependenciesToClipboard(
                 JSON.stringify(dependencyToSave),
               );
@@ -49,13 +50,14 @@ class ActionsManager {
     const RestoreDependencies = () => (
       <button
         onClick={() => {
-          chrome.storage.local.get([STORAGE_KEYS.DEPENDENCIES], (
-            result: any,
-          )=> {
-            const dependencies = result[STORAGE_KEYS.DEPENDENCIES] || {};
-            this.initializeActions();
-            dependencyManager.renderDependencies(dependencies);
-          });
+          chrome.storage.local.get(
+            [STORAGE_KEYS.DEPENDENCIES],
+            (result: any) => {
+              const dependencies = result[STORAGE_KEYS.DEPENDENCIES] || {};
+              this.initializeActions();
+              dependencyManager.renderDependencies(dependencies);
+            },
+          );
         }}
       >
         Restore
@@ -68,7 +70,7 @@ class ActionsManager {
         <SaveDependencies />
         <RestoreDependencies />
       </>,
-      document.querySelector('.board-header'),
+      document.querySelector(cardManager.insertElementForActionSelector),
       { className: 'refresh-action-div' },
     );
   };
@@ -134,7 +136,7 @@ class ActionsManager {
     };
     ReactDOMAppendChild(<CardActionDiv />, card.cardElement, {
       className: `card-actions list-card div-${card.id}`,
-      insertAfter: true,
+      insertAfter: card.insertAfter,
     });
   };
 

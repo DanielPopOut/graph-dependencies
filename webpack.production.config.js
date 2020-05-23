@@ -6,6 +6,8 @@ module.exports = {
   mode: 'production',
   entry: {
     graphdep: './src/contentScripts/index.ts',
+    githubManager: './src/contentScripts/customManagers/GithubManager.ts',
+    trelloManager: './src/contentScripts/customManagers/TrelloManager.ts',
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -35,5 +37,5 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist-prod'),
-  }
+  },
 };

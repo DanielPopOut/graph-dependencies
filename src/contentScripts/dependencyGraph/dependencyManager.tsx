@@ -1,9 +1,11 @@
 import React from 'react';
-import { cardManager } from '../getTasks/trello/cardManager';
 import { actionsManager } from '../actions/actionManager';
 import { createDependencyGraph } from './createDependencyGraph';
 import { ReactDOMAppendChild } from '../utils/customCreateElement';
 import { calculateCardHeight } from './textWidthHelper';
+import { AbstractManager } from '../customManagers/AbstractManager';
+
+declare var cardManager: AbstractManager;
 
 class DependencyManager {
   getDependencies = (
