@@ -117,10 +117,14 @@ class DependencyManager {
   };
 
   addDependency = (parentCardId: string, childCardId: string) => {
+    cardManager.addDependency(childCardId, parentCardId);
+    actionsManager.refreshCardsActions();
     return this.createEdgeData(parentCardId, childCardId);
   };
 
   removeDependency = (parentCardId: string, childCardId: string) => {
+    cardManager.removeDependency(childCardId, parentCardId);
+    actionsManager.refreshCardsActions();
     return;
   };
 
