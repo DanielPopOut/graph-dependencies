@@ -166,6 +166,7 @@ export const cardsByIdFixture: Record<string, ICard> = {
     listName: 'ToValidate',
     children: new Set([]),
     dependencies: new Set([]),
+    members: ['DT'],
   },
   d689qPjT: {
     id: 'd689qPjT',
@@ -182,6 +183,7 @@ export const cardsByIdFixture: Record<string, ICard> = {
     listName: 'ToValidate',
     children: new Set([]),
     dependencies: new Set([]),
+    members: ['DT'],
   },
   EgMg2qGP: {
     id: 'EgMg2qGP',
@@ -194,5 +196,6 @@ export const cardsByIdFixture: Record<string, ICard> = {
     listName: 'ToValidate',
     children: new Set([]),
     dependencies: new Set([]),
+    members: ['DT'],
   },
 };

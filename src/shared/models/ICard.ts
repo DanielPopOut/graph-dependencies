@@ -13,4 +13,5 @@ interface ICard {
   listName: string;
   children: Set<string>;
   dependencies: Set<string>;
+  members?: string[];
 }

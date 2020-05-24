@@ -60,6 +60,10 @@ class TrelloManager extends AbstractManager {
       },
     );
 
+    const members = [...cardElement.querySelectorAll('member-initials')].map(
+      (memberElement) => memberElement.innerHTML,
+    );
+
     const card: ICard = {
       id: cardId,
       href,
@@ -70,6 +74,7 @@ class TrelloManager extends AbstractManager {
       children: new Set(),
       dependencies: new Set(),
       cardElement,
+      members,
     };
     return card;
   };

@@ -13,7 +13,7 @@ class DrawingHelper {
     text,
     shadow = 'black',
     padding = 0,
-    fontColor
+    fontColor,
   }: {
     x: number;
     y: number;
@@ -105,9 +105,16 @@ class DrawingHelper {
           shadow: 'transparent',
           radius: 4,
           padding,
-          fontColor: '#fff'
+          fontColor: '#fff',
         });
         nextX += labelWidth + 10 + 2 * padding;
+      });
+    }
+    if (data.members) {
+      ctx.font = '45px Helvetica';
+      ctx.fillStyle = 'black';
+      data.members.map((memberInitials) => {
+        ctx.fillText(memberInitials, topLeftX + w, topLeftY);
       });
     }
   };
