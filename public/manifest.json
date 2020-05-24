@@ -18,6 +18,10 @@
     {
       "matches": ["*://github.com/*/projects/*"],
       "js": ["githubManager.js", "graphdep.js"]
+    },
+    {
+      "matches": ["*://*.asana.com/*/board"],
+      "js": ["asanaManager.js", "graphdep.js"]
     }
   ]
 }

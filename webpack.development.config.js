@@ -11,6 +11,7 @@ module.exports = {
     test: './src/testing/index.ts',
     githubManager: './src/contentScripts/customManagers/GithubManager.ts',
     trelloManager: './src/contentScripts/customManagers/TrelloManager.ts',
+    asanaManager: './src/contentScripts/customManagers/AsanaManager.ts',
   },
   devtool: 'inline-source-map',
   plugins: [
