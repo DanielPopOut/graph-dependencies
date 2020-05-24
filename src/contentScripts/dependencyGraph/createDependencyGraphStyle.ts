@@ -3,7 +3,7 @@ export const jsonStyle = [
     selector: 'node',
     style: {
       height: 'data(height)',
-      width: 200,
+      width: 240,
       shape: 'rectangle',
       'background-opacity': '0',
     },
@@ -29,7 +29,7 @@ export const jsonStyle = [
     style: {
       'background-color': 'blue',
       'background-opacity': '0.5',
-      width: 230,
+      width: 260,
       height: 'data(height)',
       'target-arrow-color': '#000',
       'text-outline-color': '#000',

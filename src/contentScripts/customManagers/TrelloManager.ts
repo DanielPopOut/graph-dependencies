@@ -1,4 +1,5 @@
 import { AbstractManager } from './AbstractManager';
+import { TRELLO_LABEL_COLORS } from '../dependencyGraph/drawingHelper.constants';
 
 class TrelloManager extends AbstractManager {
   lists: IList[] = [];
@@ -47,9 +48,14 @@ class TrelloManager extends AbstractManager {
 
     const labels = [...cardElement.querySelectorAll('.card-label')].map(
       (labelElement) => {
+        const classes = labelElement.getAttribute('class');
         return {
-          classes: labelElement.getAttribute('class'),
+          classes,
           text: labelElement.querySelector('.label-text').innerHTML,
+          color: Object.keys(TRELLO_LABEL_COLORS).reduce(
+            (final, cur) => (classes.includes(cur) ? cur : final),
+            '',
+          ),
         };
       },
     );

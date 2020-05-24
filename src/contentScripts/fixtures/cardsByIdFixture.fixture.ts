@@ -20,10 +20,12 @@ export const cardsByIdFixture: Record<string, ICard> = {
       {
         classes: 'card-label card-label-green mod-card-front',
         text: '&nbsp;',
+        color: 'green',
       },
       {
         classes: 'card-label card-label-yellow mod-card-front',
         text: 'lion',
+        color: 'yellow',
       },
     ],
     listName:
@@ -62,6 +64,7 @@ export const cardsByIdFixture: Record<string, ICard> = {
       {
         classes: 'card-label card-label-orange mod-card-front',
         text: '&nbsp;',
+        color: 'orange',
       },
     ],
     listName: 'ToValidate',
@@ -107,14 +110,17 @@ export const cardsByIdFixture: Record<string, ICard> = {
       {
         classes: 'card-label card-label-yellow mod-card-front',
         text: 'ninja',
+        color: 'yellow',
       },
       {
         classes: 'card-label card-label-orange mod-card-front',
         text: '&nbsp;',
+        color: 'orange',
       },
       {
         classes: 'card-label card-label-red mod-card-front',
         text: '&nbsp;',
+        color: 'red',
       },
     ],
     listName: 'ToValidate',
@@ -154,6 +160,7 @@ export const cardsByIdFixture: Record<string, ICard> = {
       {
         classes: 'card-label card-label-red mod-card-front',
         text: '&nbsp;',
+        color: 'red',
       },
     ],
     listName: 'ToValidate',
@@ -169,6 +176,7 @@ export const cardsByIdFixture: Record<string, ICard> = {
       {
         classes: 'card-label card-label-blue mod-card-front',
         text: '&nbsp;',
+        color: 'blue',
       },
     ],
     listName: 'ToValidate',

@@ -7,6 +7,7 @@ interface ICard {
   labels: Array<{
     classes: string;
     text: string;
+    color: string;
   }>;
   button?: HTMLButtonElement;
   listName: string;

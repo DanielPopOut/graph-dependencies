@@ -1,4 +1,5 @@
-import { COLOR_USAGES } from './drawingHelper.constants';
+import { COLOR_USAGES, TRELLO_LABEL_COLORS } from './drawingHelper.constants';
+import { getTextWidth } from './textWidthHelper';
 
 class DrawingHelper {
   roundRect = ({
@@ -11,6 +12,8 @@ class DrawingHelper {
     color = '#ffffff',
     text,
     shadow = 'black',
+    padding = 0,
+    fontColor
   }: {
     x: number;
     y: number;
@@ -21,6 +24,8 @@ class DrawingHelper {
     color?: string;
     text?: string;
     shadow?: string;
+    padding?: number;
+    fontColor?: string;
   }) => {
     var r = x + w;
     var b = y + h;
@@ -38,15 +43,15 @@ class DrawingHelper {
 
     if (text) {
       ctx.shadowColor = 'transparent';
-      ctx.fillStyle = 'black';
+      ctx.fillStyle = fontColor || 'black';
       ctx.font = `${h}px Helvetica`;
-      ctx.fillText(text, x, y + h);
+      ctx.fillText(text, x + padding, y + h);
     }
   };
   drawCard = (x: number, y: number, data: ICard, ctx: any) => {
     const fontSize = 18;
     ctx.font = `${fontSize}px Helvetica`;
-    const padding = 4;
+    const padding = 16;
     const w = 200;
     const numberOfTextLines = this.calculateNumberOfLines(
       ctx,
@@ -54,20 +59,22 @@ class DrawingHelper {
       w,
       50,
     );
-    const h = fontSize * numberOfTextLines * 1.25;
+    const cardHasLabels = !!data.labels.length;
+    const h = fontSize * (numberOfTextLines + (cardHasLabels ? 1 : 0)) * 1.25;
     const [topLeftX, topLeftY] = [x - w / 2, y - h / 2];
+    const textBeginingY = topLeftY + (cardHasLabels ? fontSize * 1.6 : 0);
 
     this.roundRect({
       x: topLeftX - padding,
       y: topLeftY - padding,
       w: w + 2 * padding,
       h: h + 2 * padding,
-      radius: 4,
+      radius: 6,
       ctx: ctx,
     });
     this.drawCardNumber({
       x: topLeftX,
-      y: topLeftY,
+      y: textBeginingY,
       cardNumber: '#' + data.cardNumber,
       ctx,
       fontSize,
@@ -76,11 +83,33 @@ class DrawingHelper {
       ctx,
       data.cardName,
       topLeftX,
-      topLeftY + fontSize,
+      textBeginingY + fontSize,
       w,
       fontSize * 1.3,
       50,
     );
+    if (cardHasLabels) {
+      const padding = 4;
+      let nextX = topLeftX;
+      data.labels.map((label, index) => {
+        const labelWidth = getTextWidth(label.text, '16px Helvetica');
+        this.roundRect({
+          x: nextX,
+          y: topLeftY,
+          text: label.text,
+          ctx,
+          w: labelWidth + 2 * padding,
+          h: fontSize * 0.8,
+          // @ts-ignore
+          color: TRELLO_LABEL_COLORS[label.color],
+          shadow: 'transparent',
+          radius: 4,
+          padding,
+          fontColor: '#fff'
+        });
+        nextX += labelWidth + 10 + 2 * padding;
+      });
+    }
   };
   drawCardNumber = ({
     x,
@@ -88,12 +117,14 @@ class DrawingHelper {
     cardNumber,
     ctx,
     fontSize,
+    color,
   }: {
     x: number;
     y: number;
     cardNumber: string;
     ctx: any;
     fontSize: number;
+    color?: string;
   }) => {
     this.roundRect({
       x: x,
