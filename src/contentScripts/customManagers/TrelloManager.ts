@@ -60,7 +60,7 @@ class TrelloManager extends AbstractManager {
       },
     );
 
-    const members = [...cardElement.querySelectorAll('member-initials')].map(
+    const members = [...cardElement.querySelectorAll('.member-initials')].map(
       (memberElement) => memberElement.innerHTML,
     );
 

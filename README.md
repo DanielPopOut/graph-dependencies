@@ -30,6 +30,12 @@ The library used to create the graph is cytoscape.js (https://js.cytoscape.org/)
 - Cards position on graph will be improved
 - Card will be grouped by label
 
+
+v2.2:
+
+- Added labels on cards
+- Added worker on the card
+
 v2.1:
 
 - Enable graph to work with Asana
