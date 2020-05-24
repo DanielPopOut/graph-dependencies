@@ -1,6 +1,10 @@
-# Create dependency graph on Trello, Github and Asana easily (and soon jira)
+This is the graph dependency **chrome extension** repo  
+You can try the extension and download it on [chrome store link](https://chrome.google.com/webstore/detail/graph-dependency-for-trel/ppbndnpfbahiilhalfmbkfnhkaohjbdo)
 
----
+Here is a demo :
+![App demo in gif - design has been updated](https://giphy.com/gifs/graph-trello-dependency-XClrCtAB9djahMHAr5/fullscreen)
+
+# Create dependency graph on Trello, Github and Asana easily (and soon jira)
 
 - If you like the extension, give it some ⭐️ on my github repo please 😍and leave a comment (it's always a pleasure to have positive feedback 🙏🏼)
   Go to https://github.com/DanielPopOut/graph-dependencies
@@ -13,8 +17,6 @@ The only autorisation asked is the storage to be able to save and restore your d
 The library used to create the graph is cytoscape.js (https://js.cytoscape.org/)
 
 ## Steps to use the app :
-
----
 
 #### (check the gif here https://giphy.com/gifs/graph-trello-dependency-XClrCtAB9djahMHAr5/fullscreen )
 
@@ -29,7 +31,6 @@ The library used to create the graph is cytoscape.js (https://js.cytoscape.org/)
 - Each card will have a different background depending on the list and label
 - Cards position on graph will be improved
 - Card will be grouped by label
-
 
 v2.2:
 
