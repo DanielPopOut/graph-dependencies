@@ -12,7 +12,7 @@ export const jsonStyle = [
     selector: 'edge',
     style: {
       'curve-style': 'bezier',
-        width: 4,
+        width: 8,
       'target-arrow-shape': 'triangle',
     },
   },

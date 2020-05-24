@@ -100,7 +100,7 @@ class DependencyManager {
           label: decodeURI(
             [completeCard.cardNumber, completeCard.cardName].join(' '),
           ),
-          height: calculateCardHeight(completeCard.cardName),
+          height: calculateCardHeight(completeCard),
         },
         classes: 'center-center',
       };

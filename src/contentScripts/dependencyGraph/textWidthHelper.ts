@@ -1,7 +1,9 @@
 export function getTextWidth(text: string, font: string) {
   // re-use canvas object for better performance
   //@ts-ignore
-  var canvas: any = getTextWidth.canvas ||  (getTextWidth.canvas = document.createElement('canvas'));
+  var canvas: any =
+    getTextWidth.canvas ||
+    (getTextWidth.canvas = document.createElement('canvas'));
   var context: any = canvas.getContext('2d');
   context.font = font;
   var metrics: any = context.measureText(text);
@@ -9,10 +11,11 @@ export function getTextWidth(text: string, font: string) {
 }
 
 export const calculateCardHeight = (
-  text: string,
+  card: ICard,
   maxWidth: number = 200,
   firstLinePadding: number = 50,
 ) => {
+  const text = card.cardName;
   let words = text.split(' ');
   let line = '';
   let isFirstLine = true;
@@ -35,5 +38,5 @@ export const calculateCardHeight = (
       line = testLine;
     }
   }
-  return linesNumber * 18 * 1.25 + 16;
+  return (linesNumber + (card.labels.length ? 1 : 0)) * 18 * 1.3 + 16;
 };
