@@ -1,7 +1,7 @@
 {
-  "name": "Graph dependency for Trello and Github",
-  "version": "2.0",
-  "description": "Create a simple graph dep on trello and github projects",
+  "name": "Graph dependency for Trello, Github and Asana",
+  "version": "2.1",
+  "description": "Create a cytoscape dependency graph on Trello, Github projects and Asana boards",
   "icons": {
     "16": "logo-16.png",
     "32": "logo-32.png",

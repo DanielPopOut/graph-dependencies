@@ -1,4 +1,4 @@
-# Create dependency graph on trello and github and asana easily (and soon jira)
+# Create dependency graph on Trello, Github and Asana easily (and soon jira)
 
 ---
 
@@ -29,6 +29,12 @@ The library used to create the graph is cytoscape.js (https://js.cytoscape.org/)
 - Each card will have a different background depending on the list and label
 - Cards position on graph will be improved
 - Card will be grouped by label
+
+v2.1:
+
+- Enable graph to work with Asana
+- fix: solved React and native event click conflict
+- fix: actions buttons are now in the card and not in a div after the card
 
 v2.0:
 
