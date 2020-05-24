@@ -26,9 +26,7 @@ class AsanaManager extends AbstractManager {
   };
 
   getCardsFromList = (list: IList) => {
-    const cardElements = list.listElement.querySelectorAll(
-      '.BoardCard-contents',
-    );
+    const cardElements = list.listElement.querySelectorAll('.BoardCard');
     return [...cardElements].map((cardElement) =>
       this.getCardDetails(cardElement, list.name),
     );
