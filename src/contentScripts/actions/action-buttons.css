@@ -1,8 +1,5 @@
 .card-actions {
-  margin-top: -11px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  padding-bottom: 8px;
+  padding: 8px 8px 0;
 }
 
 .dependency-tag {

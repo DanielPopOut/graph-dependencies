@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+
 import { ReactDOMAppendChild } from '../utils/customCreateElement';
 import './action-buttons.css';
 import { cardService } from '../modules/cards/card.service';
@@ -110,15 +111,20 @@ class ActionsManager {
 
   addActionButtonToCard = (card: ICard) => {
     const CardActionDiv = () => {
+      const buttonRef = useRef();
+
+      useEffect(() => {
+        //@ts-ignore
+        buttonRef.current.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.onCardDependencyActionClick(card.id);
+          this.refreshCardsActions();
+        });
+      }, []);
       return (
         <div>
-          <button
-            id={card.id}
-            onClick={() => {
-              this.onCardDependencyActionClick(card.id);
-              this.refreshCardsActions();
-            }}
-          >
+          <button id={card.id} ref={buttonRef}>
             {cardService.getCardDependencyText(this.dependencyCardId, card.id)}
           </button>
           {Array.from(card.dependencies).map((dependencyId) => (
@@ -135,8 +141,7 @@ class ActionsManager {
       );
     };
     ReactDOMAppendChild(<CardActionDiv />, card.cardElement, {
-      className: `card-actions list-card div-${card.id}`,
-      insertAfter: card.insertAfter,
+      className: `card-actions div-${card.id}`,
     });
   };
 

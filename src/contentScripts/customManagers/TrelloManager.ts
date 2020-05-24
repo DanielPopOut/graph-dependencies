@@ -64,7 +64,6 @@ class TrelloManager extends AbstractManager {
       children: new Set(),
       dependencies: new Set(),
       cardElement,
-      insertAfter: true,
     };
     return card;
   };

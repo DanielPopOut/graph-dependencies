@@ -12,5 +12,4 @@ interface ICard {
   listName: string;
   children: Set<string>;
   dependencies: Set<string>;
-  insertAfter?: boolean;
 }
