@@ -89,7 +89,7 @@ class DependencyManager {
 
   computeNodesAndEdges = (cardsById: Record<string, ICard>) => {
     const cardDependencies = this.generateDependencyTree(cardsById);
-    const allCards = Object.values(cardsById);
+    const allCards = Object.values(cardDependencies);
     const nodes = allCards.map((card) => {
       const completeCard = cardsById[card.id];
       return {

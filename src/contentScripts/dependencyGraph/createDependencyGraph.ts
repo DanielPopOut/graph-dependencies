@@ -51,7 +51,13 @@ export function createDependencyGraph({
         );
       } else {
         const edgesToAdd = selectedNodes.map((node: any) => {
-          return {group: 'edges', data: dependencyManager.addDependency(selectedNode.data().id, node.data.id)}
+          return {
+            group: 'edges',
+            data: dependencyManager.addDependency(
+              selectedNode.data().id,
+              node.data.id,
+            ),
+          };
         });
         cy.add(edgesToAdd);
       }
@@ -66,10 +72,13 @@ export function createDependencyGraph({
   }) {
     const selectedEdge = evt.target;
     if (evt.originalEvent.ctrlKey) {
-      dependencyManager.removeDependency(selectedEdge.data().source, selectedEdge.data().target)
+      dependencyManager.removeDependency(
+        selectedEdge.data().source,
+        selectedEdge.data().target,
+      );
       selectedEdge.remove();
     }
-    });
+  });
 
   cy.on('render cyCanvas.resize', (evt: any) => {
     bottomLayer.resetTransform(ctx);
