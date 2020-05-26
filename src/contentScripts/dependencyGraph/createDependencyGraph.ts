@@ -26,7 +26,8 @@ export function createDependencyGraph({
     layout: {
       name: 'breadthfirst',
       directed: true,
-      padding: 40,
+      padding: 10,
+      spacingFactor: 1.3,
     },
   }); // cy init
 
