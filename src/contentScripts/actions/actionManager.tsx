@@ -36,13 +36,17 @@ class ActionsManager {
 
   saveData = (copyConfig = false) => {
     const dependencies = dependencyManager.getDependencies();
-    StorageService.saveLocalStorageConfiguration(
-      {
-        dependencies,
-        selectedLists: Array.from(this.selectedLists),
-      },
-      copyConfig,
-    );
+    if (Object.values(dependencies).length) {
+      StorageService.saveLocalStorageConfiguration(
+        {
+          dependencies,
+          selectedLists: Array.from(this.selectedLists),
+        },
+        copyConfig,
+      );
+    } else {
+      alert('No dependencies found');
+    }
   };
 
   addRefreshActionsButton = () => {
@@ -74,7 +78,7 @@ class ActionsManager {
               const config: IStorageData = JSON.parse(configRetrievedString);
               this.restoreConfiguraton(config);
             } catch (e) {
-              alert('configuration non valide, veuillez vérifier les données rentrées');
+              alert('Invalid configuration, check JSON data please');
             }
           }
         }}
