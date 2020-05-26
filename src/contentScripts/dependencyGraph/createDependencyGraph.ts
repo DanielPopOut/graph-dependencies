@@ -15,6 +15,9 @@ export function createDependencyGraph({
   nodes: any;
   edges: any;
 }) {
+  const independantCardPerLine = 6;
+  let independantCardTransformed = 0;
+  let parentCardTransformed = 0;
   var cy = cytoscape({
     container: document.getElementById('cy'),
     boxSelectionEnabled: true,
@@ -28,6 +31,25 @@ export function createDependencyGraph({
       directed: true,
       padding: 10,
       spacingFactor: 1.3,
+      maximal: true,
+      transform: function (
+        node: { data: () => ICard },
+        position: { x: number; y: number },
+      ) {
+        let cardPosition = position;
+        if (!node.data().children.size && !node.data().dependencies.size) {
+          // Cas des cartes indépendantes
+          cardPosition = {
+            x: 0 + (independantCardTransformed % independantCardPerLine) * 260,
+            y:
+              200 -
+              Math.floor(independantCardTransformed / independantCardPerLine) *
+                300,
+          };
+          independantCardTransformed += 1;
+        }
+        return cardPosition;
+      },
     },
   }); // cy init
 
