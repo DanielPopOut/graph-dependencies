@@ -2,14 +2,13 @@ export abstract class AbstractManager {
   lists: IList[] = [];
   cardsById: Record<string, ICard> = {};
   abstract insertElementForActionSelector: string;
+  // Here are the functions to update lists and cards
+  abstract getLists: () => IList[];
+  abstract getCards: () => ICard[];
 
   get cards() {
     return Object.values(this.cardsById);
   }
-
-  // Here are the functions to update lists and cards
-  abstract getLists: () => IList[];
-  abstract getCards: () => ICard[];
 
   refresh() {
     this.lists = this.getLists();
