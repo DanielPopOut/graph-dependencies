@@ -32,6 +32,11 @@ The library used to create the graph is cytoscape.js (https://js.cytoscape.org/)
 - Cards position on graph will be improved
 - Card will be grouped by label
 
+v2.4:
+
+- Save data automatically in localStorage
+- Restore data from a json
+
 v2.3:
 
 - List selection for dependency graph enabled
