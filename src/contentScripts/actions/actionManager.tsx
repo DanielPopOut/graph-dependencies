@@ -63,7 +63,25 @@ class ActionsManager {
         Show dependencies
       </button>
     );
-    
+    const RestoreDependenciesButton = () => (
+      <button
+        onClick={() => {
+          const configRetrievedString = prompt(
+            'Veuillez entrer la configuration de restauration fournie svp',
+          );
+          if (configRetrievedString) {
+            try {
+              const config: IStorageData = JSON.parse(configRetrievedString);
+              this.restoreConfiguraton(config);
+            } catch (e) {
+              alert('configuration non valide, veuillez vérifier les données rentrées');
+            }
+          }
+        }}
+      >
+        Restore config
+      </button>
+    );
     const CopyDependencies = () => (
       <button onClick={() => this.saveData(true)}>Copy config</button>
     );
@@ -72,10 +90,17 @@ class ActionsManager {
         <RefreshActionsButton />
         <ShowDependenciesButton />
         <CopyDependencies />
+        <RestoreDependenciesButton />
       </>,
       document.querySelector(cardManager.insertElementForActionSelector),
       { className: 'refresh-action-div' },
     );
+  };
+
+  restoreConfiguraton = ({ dependencies, selectedLists }: IStorageData) => {
+    this.selectedLists = new Set(selectedLists);
+    actionsManager.refreshListActions(cardManager.lists);
+    dependencyManager.renderDependencies(dependencies);
   };
 
   initializeActions = () => {
@@ -84,15 +109,7 @@ class ActionsManager {
       .forEach((el) => el.remove());
     this.addRefreshActionsButton();
     cardManager.refresh();
-    // TODO : update actions behind addListActions
-    const {
-      dependencies,
-      selectedLists,
-    } = StorageService.getLocalStorageConfiguration();
-    this.selectedLists = new Set(selectedLists);
-    actionsManager.refreshListActions(cardManager.lists);
-    dependencyManager.renderDependencies(dependencies);
-    actionsManager.refreshCardsActions(cardManager.cards);
+    this.restoreConfiguraton(StorageService.getLocalStorageConfiguration());
   };
 
   refreshListActions = (lists: IList[]) => {
