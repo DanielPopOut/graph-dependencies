@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development npx webpack --config webpack.development.config.js --watch",
-    "build:prod": "NODE_ENV=production npx webpack --config webpack.production.config.js"
+    "build:prod": "node updateManifestVersion.js && NODE_ENV=production npx webpack --config webpack.production.config.js"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
