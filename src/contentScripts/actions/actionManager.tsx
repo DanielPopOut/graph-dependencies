@@ -163,6 +163,7 @@ class ActionsManager {
               card={cardManager.cardsById[dependencyId]}
               onClose={() => {
                 cardManager.removeDependency(card.id, dependencyId);
+                this.saveData();
                 this.refreshCardsActions();
               }}
             />
