@@ -1,7 +1,7 @@
 import { AbstractManager } from './AbstractManager';
 import { TRELLO_LABEL_COLORS } from '../dependencyGraph/drawingHelper.constants';
 
-class TrelloManager extends AbstractManager {
+export class TrelloManager extends AbstractManager {
   lists: IList[] = [];
   cardsById: Record<string, ICard> = {};
   insertElementForActionSelector = '.board-header';
