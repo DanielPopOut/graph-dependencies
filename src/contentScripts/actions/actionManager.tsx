@@ -16,6 +16,26 @@ const STORAGE_KEYS = {
 
 class ActionsManager {
   dependencyCardId: string;
+  selectedLists = new Set<string>();
+
+  toggleList = (listName: string) => {
+    this.selectedLists.has(listName)
+      ? this.selectedLists.delete(listName)
+      : this.selectedLists.add(listName);
+    this.refreshListActions(cardManager.lists);
+  };
+
+  getCardsInSelectedLists = (
+    cardsById: Record<string, ICard>,
+    selectedList: Set<string>,
+  ) =>
+    selectedList.size
+      ? Object.fromEntries(
+          Object.entries(cardsById).filter(([_, card]) =>
+            selectedList.has(card.listName),
+          ),
+        )
+      : cardsById;
 
   addRefreshActionsButton = () => {
     const RefreshActionsButton = () => (
@@ -23,9 +43,14 @@ class ActionsManager {
     );
     const ShowDependenciesButton = () => (
       <button
-        onClick={() =>
-          dependencyManager.createDependencyGraph(cardManager.cardsById)
-        }
+        onClick={() => {
+          dependencyManager.createDependencyGraph(
+            this.getCardsInSelectedLists(
+              cardManager.cardsById,
+              this.selectedLists,
+            ),
+          );
+        }}
       >
         Show dependencies
       </button>
@@ -83,25 +108,31 @@ class ActionsManager {
     this.addRefreshActionsButton();
     cardManager.refresh();
     // TODO : update actions behind addListActions
-    // actionsManager.addListActions(cardManager.lists);
+    actionsManager.refreshListActions(cardManager.lists);
     actionsManager.refreshCardsActions(cardManager.cards);
   };
 
-  addListActions = (lists: IList[]) => {
+  refreshListActions = (lists: IList[]) => {
+    document.querySelectorAll('.list-actions').forEach((el) => el.remove());
     lists.forEach((list) => this.addActionButtonToList(list));
   };
 
   addActionButtonToList = (list: IList) => {
+    const isListSelected = this.selectedLists.has(list.name);
     const ListDependenciesButton = () => (
       <button
         className='bar'
         id={list.name}
-        onClick={(e) => console.log(list, e)}
+        onClick={() => {
+          this.toggleList(list.name);
+        }}
       >
-        LIST DEPENDENCIES
+        {isListSelected ? 'LIST SELECTED' : 'SELECT THIS LIST'}
       </button>
     );
-    ReactDOMAppendChild(<ListDependenciesButton />, list.actionInsertElement);
+    ReactDOMAppendChild(<ListDependenciesButton />, list.actionInsertElement, {
+      className: `list-actions`,
+    });
   };
 
   refreshCardsActions = (cards: ICard[] = cardManager.cards) => {
@@ -119,7 +150,6 @@ class ActionsManager {
           e.preventDefault();
           e.stopPropagation();
           this.onCardDependencyActionClick(card.id);
-          this.refreshCardsActions();
         });
       }, []);
       return (
@@ -154,6 +184,7 @@ class ActionsManager {
       cardManager.addDependency(this.dependencyCardId, cardId);
       this.dependencyCardId = '';
     }
+    this.refreshCardsActions();
   };
 
   copyDependenciesToClipboard = (str: string) => {

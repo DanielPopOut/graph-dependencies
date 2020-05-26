@@ -8,7 +8,7 @@
     "allowJs": true,
     "downlevelIteration": true,
     "sourceMap": true,
-    "lib": ["es5", "es6", "dom", "dom.iterable"],
+    "lib": ["es5", "es6", "dom", "dom.iterable", "es2019"],
     "allowSyntheticDefaultImports": true
   }
 }
