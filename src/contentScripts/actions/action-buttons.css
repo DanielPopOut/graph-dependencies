@@ -26,3 +26,8 @@
 .refresh-action-div > *:not(:first-child) {
   margin-left: 10px;
 }
+
+.div-graph-dep-action {
+  position: relative;
+  z-index: 5;
+}
