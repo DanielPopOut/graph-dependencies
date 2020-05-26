@@ -36,7 +36,7 @@ class ActionsManager {
 
   saveData = (copyConfig = false) => {
     const dependencies = dependencyManager.getDependencies();
-    if (Object.values(dependencies).length) {
+    if (Object.values(dependencies).length || this.selectedLists.size) {
       StorageService.saveLocalStorageConfiguration(
         {
           dependencies,

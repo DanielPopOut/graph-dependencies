@@ -4,6 +4,8 @@
 
 .card-actions button {
   margin-bottom: 0;
+  position: relative;
+  z-index: 5;
 }
 
 .dependency-tag {
@@ -27,7 +29,3 @@
   margin-left: 10px;
 }
 
-.div-graph-dep-action {
-  position: relative;
-  z-index: 5;
-}
