@@ -149,27 +149,25 @@ class ActionsManager {
         >
           {isListSelected ? 'LIST SELECTED' : 'SELECT THIS LIST'}
         </button>
-        <span>
-          <input
-            type='checkbox'
-            checked={this.doneListName === list.name}
-            onClick={() => {
-              this.doneListName = list.name;
-              console.log('click', list, this.doneListName);
-              this.onListChange();
-            }}
-          />
+        <span
+          className='list-actions-span'
+          onClick={() => {
+            this.doneListName = list.name;
+            console.log('click', list, this.doneListName);
+            this.onListChange();
+          }}
+        >
+          <input type='checkbox' checked={this.doneListName === list.name} />
           Start
         </span>
-        <span>
-          <input
-            type='checkbox'
-            checked={this.startListName === list.name}
-            onClick={() => {
-              this.startListName = list.name;
-              this.onListChange();
-            }}
-          />
+        <span
+          className='list-actions-span'
+          onClick={() => {
+            this.startListName = list.name;
+            this.onListChange();
+          }}
+        >
+          <input type='checkbox' checked={this.startListName === list.name} />
           Done
         </span>
       </>

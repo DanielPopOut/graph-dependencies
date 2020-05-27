@@ -32,3 +32,15 @@
 .list-actions {
   position: relative;
 }
+
+.list-actions-span {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.list-actions-span input {
+  margin: 0;
+  margin-right: 5px;
+}
