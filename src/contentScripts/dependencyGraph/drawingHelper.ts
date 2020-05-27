@@ -1,5 +1,19 @@
 import { COLOR_USAGES, TRELLO_LABEL_COLORS } from './drawingHelper.constants';
 import { getTextWidth } from './textWidthHelper';
+import { actionsManager } from '../actions/actionManager';
+
+const calculateCardColor = (
+  card: ICard,
+  doneListName: string,
+  startListName: string,
+) => {
+  if (card.listName === doneListName) {
+    return '#90ee90';
+  } else if (card.listName !== startListName) {
+    return '#FFD39E';
+  }
+  return '#ffffff';
+};
 
 class DrawingHelper {
   roundRect = ({
@@ -71,6 +85,11 @@ class DrawingHelper {
       h: h + 2 * padding,
       radius: 6,
       ctx: ctx,
+      color: calculateCardColor(
+        data,
+        actionsManager.doneListName,
+        actionsManager.startListName,
+      ),
     });
     this.drawCardNumber({
       x: topLeftX,
@@ -114,7 +133,7 @@ class DrawingHelper {
       ctx.font = '35px Helvetica';
       ctx.fillStyle = 'black';
       data.members.map((member) => {
-        ctx.fillText(member, topLeftX + w/2, topLeftY - padding/2);
+        ctx.fillText(member, topLeftX + w / 2, topLeftY - padding / 2);
       });
     }
   };
