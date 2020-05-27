@@ -2,10 +2,10 @@ const STORAGE_KEY = window?.location?.href || 'GRAPH_DEP';
 
 export const StorageService = {
   saveLocalStorageConfiguration: function (
-    { dependencies, selectedLists }: IStorageData,
+    storageData: IStorageData,
     copy = false,
   ) {
-    const dependencyToSave = JSON.stringify({ dependencies, selectedLists });
+    const dependencyToSave = JSON.stringify(storageData);
     localStorage.setItem(STORAGE_KEY, dependencyToSave);
     if (copy) {
       this.copyDependenciesToClipboard(dependencyToSave);
@@ -18,7 +18,12 @@ export const StorageService = {
     if (storageDataRetrieved) {
       return JSON.parse(storageDataRetrieved);
     }
-    return { dependencies: {}, selectedLists: [] };
+    return {
+      dependencies: {},
+      selectedLists: [],
+      doneListName: '',
+      startListName: '',
+    };
   },
 
   copyDependenciesToClipboard: function (str: string) {

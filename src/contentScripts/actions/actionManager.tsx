@@ -13,11 +13,17 @@ declare var cardManager: AbstractManager;
 class ActionsManager {
   dependencyCardId: string;
   selectedLists = new Set<string>();
+  startListName = '';
+  doneListName = '';
 
   toggleList = (listName: string) => {
     this.selectedLists.has(listName)
       ? this.selectedLists.delete(listName)
       : this.selectedLists.add(listName);
+    this.onListChange();
+  };
+
+  onListChange = () => {
     this.refreshListActions(cardManager.lists);
     this.saveData();
   };
@@ -41,6 +47,8 @@ class ActionsManager {
         {
           dependencies,
           selectedLists: Array.from(this.selectedLists),
+          doneListName: this.doneListName,
+          startListName: this.startListName,
         },
         copyConfig,
       );
@@ -101,8 +109,15 @@ class ActionsManager {
     );
   };
 
-  restoreConfiguraton = ({ dependencies, selectedLists }: IStorageData) => {
+  restoreConfiguraton = ({
+    dependencies,
+    selectedLists,
+    doneListName,
+    startListName,
+  }: IStorageData) => {
     this.selectedLists = new Set(selectedLists);
+    this.doneListName = doneListName;
+    this.startListName = startListName;
     actionsManager.refreshListActions(cardManager.lists);
     dependencyManager.renderDependencies(dependencies);
   };
@@ -124,15 +139,40 @@ class ActionsManager {
   addActionButtonToList = (list: IList) => {
     const isListSelected = this.selectedLists.has(list.name);
     const ListDependenciesButton = () => (
-      <button
-        className='bar'
-        id={list.name}
-        onClick={() => {
-          this.toggleList(list.name);
-        }}
-      >
-        {isListSelected ? 'LIST SELECTED' : 'SELECT THIS LIST'}
-      </button>
+      <>
+        <button
+          className='bar'
+          id={list.name}
+          onClick={() => {
+            this.toggleList(list.name);
+          }}
+        >
+          {isListSelected ? 'LIST SELECTED' : 'SELECT THIS LIST'}
+        </button>
+        <span>
+          <input
+            type='checkbox'
+            checked={this.doneListName === list.name}
+            onClick={() => {
+              this.doneListName = list.name;
+              console.log('click', list, this.doneListName);
+              this.onListChange();
+            }}
+          />
+          Start
+        </span>
+        <span>
+          <input
+            type='checkbox'
+            checked={this.startListName === list.name}
+            onClick={() => {
+              this.startListName = list.name;
+              this.onListChange();
+            }}
+          />
+          Done
+        </span>
+      </>
     );
     ReactDOMAppendChild(<ListDependenciesButton />, list.actionInsertElement, {
       className: `list-actions`,
