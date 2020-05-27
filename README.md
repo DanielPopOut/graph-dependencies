@@ -32,6 +32,13 @@ The library used to create the graph is cytoscape.js (https://js.cytoscape.org/)
 - Cards position on graph will be improved
 - Card will be grouped by label
 
+v2.5:
+
+- Corrected bug 2.4 which showed the graph out of the visible zone
+- Improve graph rendering
+- Add done and start columns
+- Color cards depending on the column they are in
+
 v2.4:
 
 - Save data automatically in localStorage

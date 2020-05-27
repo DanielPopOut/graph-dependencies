@@ -28,6 +28,7 @@ const askForMajorVersionUpdate = () => {
             updateManifests();
           } else {
             console.log('Extension version won t be update');
+            process.exit();
           }
         },
       );
