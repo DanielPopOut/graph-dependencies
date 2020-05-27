@@ -60,9 +60,10 @@ export class TrelloManager extends AbstractManager {
       },
     );
 
-    const members = [...cardElement.querySelectorAll('.member-initials')].map(
-      (memberElement) => memberElement.innerHTML,
-    );
+    const members = [
+      ...cardElement.querySelectorAll('.member-initials'),
+      ...cardElement.querySelectorAll('.member-avatar'),
+    ].map((memberElement) => memberElement.getAttribute('title').split(' ')[0]);
 
     const card: ICard = {
       id: cardId,

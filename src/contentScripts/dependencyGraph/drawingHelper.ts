@@ -111,10 +111,10 @@ class DrawingHelper {
       });
     }
     if (data.members) {
-      ctx.font = '45px Helvetica';
+      ctx.font = '35px Helvetica';
       ctx.fillStyle = 'black';
-      data.members.map((memberInitials) => {
-        ctx.fillText(memberInitials, topLeftX + w, topLeftY);
+      data.members.map((member) => {
+        ctx.fillText(member, topLeftX + w/2, topLeftY - padding/2);
       });
     }
   };
