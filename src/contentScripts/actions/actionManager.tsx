@@ -152,22 +152,21 @@ class ActionsManager {
         <span
           className='list-actions-span'
           onClick={() => {
-            this.doneListName = list.name;
-            console.log('click', list, this.doneListName);
-            this.onListChange();
-          }}
-        >
-          <input type='checkbox' checked={this.doneListName === list.name} />
-          Start
-        </span>
-        <span
-          className='list-actions-span'
-          onClick={() => {
             this.startListName = list.name;
             this.onListChange();
           }}
         >
           <input type='checkbox' checked={this.startListName === list.name} />
+          Start
+        </span>
+        <span
+          className='list-actions-span'
+          onClick={() => {
+            this.doneListName = list.name;
+            this.onListChange();
+          }}
+        >
+          <input type='checkbox' checked={this.doneListName === list.name} />
           Done
         </span>
       </>
