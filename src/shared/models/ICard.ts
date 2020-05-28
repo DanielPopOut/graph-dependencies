@@ -14,4 +14,5 @@ interface ICard {
   children: Set<string>;
   dependencies: Set<string>;
   members?: string[];
+  ticketDifficulty?: string;
 }

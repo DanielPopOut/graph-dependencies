@@ -44,7 +44,25 @@ export class TrelloManager extends AbstractManager {
     const [_, prefix, cardId, cardNumberAndName] = href
       ? href.split('/')
       : ['', '', 'noCardSlug', 'noNumber - noName'];
-    const [cardNumber, ...cardName] = cardNumberAndName.split('-');
+    const [cardNumber, ...rest] = cardNumberAndName.split('-');
+    const rawCardName = cardElement.querySelector<HTMLInputElement>(
+      '.list-card-title',
+    ).innerText;
+
+    const nameWithoutCardNumber = rawCardName
+      .split(/^#(\d+)\s+/)
+      .filter((x) => x);
+    const cardNameAndTicketDifficulty = nameWithoutCardNumber[
+      nameWithoutCardNumber.length - 1
+    ]
+      .split(/^\((\d+)\)\s+/)
+      .filter((x) => x);
+    const ticketDifficulty =
+      cardNameAndTicketDifficulty.length === 2
+        ? cardNameAndTicketDifficulty[0]
+        : '';
+    const cardName =
+      cardNameAndTicketDifficulty[cardNameAndTicketDifficulty.length - 1];
 
     const labels = [...cardElement.querySelectorAll('.card-label')].map(
       (labelElement) => {
@@ -69,13 +87,14 @@ export class TrelloManager extends AbstractManager {
       id: cardId,
       href,
       cardNumber,
-      cardName: cardName.join(' '),
+      cardName,
       labels,
       listName,
       children: new Set(),
       dependencies: new Set(),
       cardElement,
       members,
+      ticketDifficulty,
     };
     return card;
   };

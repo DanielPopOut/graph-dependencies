@@ -1,9 +1,11 @@
+import { CARD_WIDTH, CARD_WIDTH_WITH_SPACING } from './drawingHelper.constants';
+
 export const jsonStyle = [
   {
     selector: 'node',
     style: {
       height: 'data(height)',
-      width: 240,
+      width: CARD_WIDTH,
       shape: 'rectangle',
       'background-opacity': '0',
     },
@@ -12,7 +14,7 @@ export const jsonStyle = [
     selector: 'edge',
     style: {
       'curve-style': 'bezier',
-        width: 8,
+      width: 8,
       'target-arrow-shape': 'triangle',
     },
   },
@@ -29,7 +31,7 @@ export const jsonStyle = [
     style: {
       'background-color': 'blue',
       'background-opacity': '0.5',
-      width: 260,
+      width: CARD_WIDTH_WITH_SPACING,
       height: 'data(height)',
       'target-arrow-color': '#000',
       'text-outline-color': '#000',

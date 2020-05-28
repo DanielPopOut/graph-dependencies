@@ -1,4 +1,8 @@
-import { COLOR_USAGES, TRELLO_LABEL_COLORS } from './drawingHelper.constants';
+import {
+  COLOR_USAGES,
+  TRELLO_LABEL_COLORS,
+  CARD_CONTENT_WIDTH,
+} from './drawingHelper.constants';
 import { getTextWidth } from './textWidthHelper';
 import { actionsManager } from '../actions/actionManager';
 
@@ -66,15 +70,16 @@ class DrawingHelper {
     const fontSize = 18;
     ctx.font = `${fontSize}px Helvetica`;
     const padding = 16;
-    const w = 200;
+    const w = CARD_CONTENT_WIDTH;
     const numberOfTextLines = this.calculateNumberOfLines(
       ctx,
       data.cardName,
       w,
       50,
     );
+    const lineHeight = fontSize * 1.25;
     const cardHasLabels = !!data.labels.length;
-    const h = fontSize * (numberOfTextLines + (cardHasLabels ? 1 : 0)) * 1.25;
+    const h = lineHeight * (numberOfTextLines + 1 + (cardHasLabels ? 1 : 0));
     const [topLeftX, topLeftY] = [x - w / 2, y - h / 2];
     const textBeginingY = topLeftY + (cardHasLabels ? fontSize * 1.6 : 0);
 
@@ -91,21 +96,33 @@ class DrawingHelper {
         actionsManager.startListName,
       ),
     });
-    this.drawCardNumber({
+    const cardNumberWidth = this.drawCardNumber({
       x: topLeftX,
       y: textBeginingY,
       cardNumber: '#' + data.cardNumber,
       ctx,
       fontSize,
     });
+
+    //draw difficulty card number after cardNumber
+    if (data.ticketDifficulty) {
+      this.drawCardNumber({
+        x: topLeftX + 2 * cardNumberWidth,
+        y: textBeginingY,
+        cardNumber: data.ticketDifficulty,
+        ctx,
+        fontSize,
+        color: COLOR_USAGES.cardDifficultyBackground,
+      });
+    }
+
     this.wrapText(
       ctx,
       data.cardName,
       topLeftX,
-      textBeginingY + fontSize,
+      textBeginingY + 2 * lineHeight,
       w,
       fontSize * 1.3,
-      50,
     );
     if (cardHasLabels) {
       const padding = 4;
@@ -152,17 +169,19 @@ class DrawingHelper {
     fontSize: number;
     color?: string;
   }) => {
+    const width = getTextWidth(cardNumber, ctx.font);
     this.roundRect({
       x: x,
       y: y,
-      w: (fontSize * ((cardNumber && cardNumber.length) || 1) * 2) / 3,
+      w: width,
       h: fontSize,
       radius: 4,
       ctx: ctx,
-      color: COLOR_USAGES.cardNumberBackground,
+      color: color || COLOR_USAGES.cardNumberBackground,
       text: cardNumber,
       shadow: 'transparent',
     });
+    return width;
   };
 
   wrapText = (

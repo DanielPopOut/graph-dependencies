@@ -1,9 +1,11 @@
 const COLORS = {
   yellow: 'rgb(255, 221, 0)',
+  lightBlue: 'rgb(71, 186, 224)',
 };
 
 export const COLOR_USAGES = {
   cardNumberBackground: COLORS.yellow,
+  cardDifficultyBackground: COLORS.lightBlue,
 };
 
 export enum TRELLO_LABEL_COLORS {
@@ -18,3 +20,7 @@ export enum TRELLO_LABEL_COLORS {
   pink = '#ff78cb',
   black = '#344563',
 }
+
+export const CARD_CONTENT_WIDTH = 250;
+export const CARD_WIDTH = CARD_CONTENT_WIDTH + 40;
+export const CARD_WIDTH_WITH_SPACING = CARD_WIDTH + 20;

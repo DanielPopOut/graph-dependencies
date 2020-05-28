@@ -5,6 +5,7 @@ import cyCanvas from 'cytoscape-canvas';
 import { drawingHelper } from './drawingHelper';
 import { jsonStyle } from './createDependencyGraphStyle';
 import { dependencyManager } from './dependencyManager';
+import { CARD_WIDTH_WITH_SPACING } from './drawingHelper.constants';
 
 cyCanvas(cytoscape); // Register extension
 
@@ -29,8 +30,8 @@ export function createDependencyGraph({
     layout: {
       name: 'breadthfirst',
       directed: true,
-      padding: 10,
-      spacingFactor: 1.3,
+      padding: 40,
+      spacingFactor: 1.2,
       maximal: true,
       transform: function (
         node: { data: () => ICard },
@@ -40,7 +41,10 @@ export function createDependencyGraph({
         if (!node.data().children.size && !node.data().dependencies.size) {
           // Cas des cartes indépendantes
           cardPosition = {
-            x: 0 + (independantCardTransformed % independantCardPerLine) * 260,
+            x:
+              0 +
+              (independantCardTransformed % independantCardPerLine) *
+                CARD_WIDTH_WITH_SPACING,
             y:
               200 -
               Math.floor(independantCardTransformed / independantCardPerLine) *
