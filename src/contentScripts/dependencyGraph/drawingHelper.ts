@@ -107,7 +107,7 @@ class DrawingHelper {
     //draw difficulty card number after cardNumber
     if (data.ticketDifficulty) {
       this.drawCardNumber({
-        x: topLeftX + 2 * cardNumberWidth,
+        x: topLeftX + cardNumberWidth + 15,
         y: textBeginingY,
         cardNumber: data.ticketDifficulty,
         ctx,
