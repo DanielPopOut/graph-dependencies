@@ -16,9 +16,7 @@ export function createDependencyGraph({
   nodes: any;
   edges: any;
 }) {
-  const independantCardPerLine = 6;
   let independantCardTransformed = 0;
-  let parentCardTransformed = 0;
   var cy = cytoscape({
     container: document.getElementById('cy'),
     boxSelectionEnabled: true,
@@ -31,7 +29,7 @@ export function createDependencyGraph({
       name: 'breadthfirst',
       directed: true,
       padding: 40,
-      spacingFactor: 1.2,
+      spacingFactor: 1.1,
       maximal: true,
       transform: function (
         node: { data: () => ICard },
@@ -43,12 +41,9 @@ export function createDependencyGraph({
           cardPosition = {
             x:
               0 +
-              (independantCardTransformed % independantCardPerLine) *
+              Math.floor(independantCardTransformed / 2) *
                 CARD_WIDTH_WITH_SPACING,
-            y:
-              200 -
-              Math.floor(independantCardTransformed / independantCardPerLine) *
-                300,
+            y: 300 - Math.floor(independantCardTransformed % 2) * 200,
           };
           independantCardTransformed += 1;
         }
@@ -126,4 +121,40 @@ export function createDependencyGraph({
     });
     ctx.restore();
   });
+
+  const doubleClickDelayMs = 350;
+  let previousTapStamp = 0;
+
+  cy.on('tap', function (e) {
+    var currentTapStamp = e.timeStamp;
+    var msFromLastTap = currentTapStamp - previousTapStamp;
+
+    if (msFromLastTap < doubleClickDelayMs) {
+      e.target.trigger('doubleTap', e);
+    }
+    previousTapStamp = currentTapStamp;
+  });
+
+  cy.on('doubleTap', function () {
+    // alert('double tap');
+    reorderGraph();
+  });
+
+  const reorderGraph = () => {
+    const parentNodes: Array<{ data: ICard }> = nodes.filter(
+      (node) => node.data.children.size && !node.data.dependencies.size,
+    );
+    parentNodes.forEach((parentNode) => {
+      const childrenNodePositions = [
+        ...parentNode.data.children,
+      ].map((childId) => cy.$id(childId).position('x'));
+      const middlePosition =
+        childrenNodePositions.reduce((final, cur) => final + cur, 0) /
+        childrenNodePositions.length;
+      cy.$id(parentNode.data.id).position('x', middlePosition);
+    });
+    cy.fit('', 40);
+  };
+
+  reorderGraph();
 }
