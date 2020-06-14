@@ -11,6 +11,7 @@ import { StorageService } from './storageService';
 declare var cardManager: AbstractManager;
 
 class ActionsManager {
+  areActionsFirstInitialized: boolean = false; // In order to refresh actions on cards on body changes with mutation observer
   dependencyCardId: string;
   selectedLists = new Set<string>();
   startListName = '';
@@ -97,6 +98,9 @@ class ActionsManager {
     const CopyDependencies = () => (
       <button onClick={() => this.saveData(true)}>Copy config</button>
     );
+    document
+      .querySelectorAll('.refresh-action-div')
+      .forEach((el) => el.remove());
     ReactDOMAppendChild(
       <>
         <RefreshActionsButton />
@@ -118,15 +122,30 @@ class ActionsManager {
     this.selectedLists = new Set(selectedLists);
     this.doneListName = doneListName;
     this.startListName = startListName;
-    actionsManager.refreshListActions(cardManager.lists);
+    this.refreshListActions(cardManager.lists);
     dependencyManager.renderDependencies(dependencies);
+    actionsManager.refreshCardsActions();
   };
 
-  initializeActions = () => {
-    document
-      .querySelectorAll('.div-graph-dep-action')
-      .forEach((el) => el.remove());
+  initializeActions = (isAutoUpdate: boolean = false) => {
     this.addRefreshActionsButton();
+    if (isAutoUpdate) {
+      if (!this.areActionsFirstInitialized) {
+        return;
+      }
+      cardManager.refresh();
+      if (
+        cardManager.cards.length !==
+        document.querySelectorAll('.card-actions').length
+      ) {
+        document
+          .querySelectorAll('.div-graph-dep-action')
+          .forEach((el) => el.remove());
+        this.restoreConfiguraton(StorageService.getLocalStorageConfiguration());
+      }
+      return;
+    }
+    this.areActionsFirstInitialized = true;
     cardManager.refresh();
     this.restoreConfiguraton(StorageService.getLocalStorageConfiguration());
   };
@@ -177,7 +196,6 @@ class ActionsManager {
   };
 
   refreshCardsActions = (cards: ICard[] = cardManager.cards) => {
-    document.querySelectorAll('.card-actions').forEach((el) => el.remove());
     cards.forEach((card) => this.addActionButtonToCard(card));
   };
 
@@ -212,6 +230,7 @@ class ActionsManager {
         </div>
       );
     };
+    card.cardElement.querySelector('.card-actions')?.remove();
     ReactDOMAppendChild(<CardActionDiv />, card.cardElement, {
       className: `card-actions div-${card.id}`,
     });

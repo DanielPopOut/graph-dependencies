@@ -33,7 +33,9 @@ export class TrelloManager extends AbstractManager {
   };
 
   getCardsFromList = (list: IList) => {
-    const cardElements = list.listElement.querySelectorAll('.list-card');
+    const cardElements = list.listElement.querySelectorAll(
+      '.list-card.js-member-droppable',
+    );
     return [...cardElements].map((cardElement) =>
       this.getCardDetails(cardElement, list.name),
     );
@@ -53,26 +55,29 @@ export class TrelloManager extends AbstractManager {
       }
     } catch (e) {}
 
-    const rawCardName = cardElement.querySelector<HTMLInputElement>(
-      '.list-card-title',
-    ).innerText;
+    const rawCardName =
+      cardElement.querySelector<HTMLInputElement>('.list-card-title')
+        ?.innerText || '';
 
-    const nameWithoutCardNumber = rawCardName
-      .split(/^#(\d+)\s+/)
-      .filter((x) => x);
-    const cardNameAndTicketDifficulty = nameWithoutCardNumber[
-      nameWithoutCardNumber.length - 1
-    ]
-      .split(/^\((\d+)\)\s*/)
-      .filter((x) => x);
-    ticketDifficulty =
-      ticketDifficulty ||
-      (cardNameAndTicketDifficulty.length === 2
-        ? cardNameAndTicketDifficulty[0]
-        : '');
+    let cardName = '';
+    if (rawCardName) {
+      const nameWithoutCardNumber = rawCardName
+        .split(/^#(\d+)\s+/)
+        .filter((x) => x);
+      const cardNameAndTicketDifficulty = nameWithoutCardNumber[
+        nameWithoutCardNumber.length - 1
+      ]
+        .split(/^\((\d+)\)\s*/)
+        .filter((x) => x);
+      ticketDifficulty =
+        ticketDifficulty ||
+        (cardNameAndTicketDifficulty.length === 2
+          ? cardNameAndTicketDifficulty[0]
+          : '');
 
-    const cardName =
-      cardNameAndTicketDifficulty[cardNameAndTicketDifficulty.length - 1];
+      cardName =
+        cardNameAndTicketDifficulty[cardNameAndTicketDifficulty.length - 1];
+    }
 
     const labels = [...cardElement.querySelectorAll('.card-label')].map(
       (labelElement) => {

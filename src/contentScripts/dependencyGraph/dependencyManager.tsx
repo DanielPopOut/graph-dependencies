@@ -33,7 +33,6 @@ class DependencyManager {
         }
       });
     });
-    actionsManager.refreshCardsActions();
   };
 
   generateDependencyTree = (cards: Record<string, ICard>) => {
