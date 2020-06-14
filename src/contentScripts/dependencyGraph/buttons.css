@@ -11,3 +11,11 @@
   background-color: #e3e3e3;
   border-radius: 5px;
 }
+
+.card-actions button {
+  background-color: #d4d4ff;
+}
+
+.card-actions button.selected {
+  background-color: #ffc1c1;
+}

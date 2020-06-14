@@ -213,7 +213,11 @@ class ActionsManager {
       }, []);
       return (
         <div>
-          <button id={card.id} ref={buttonRef}>
+          <button
+            id={card.id}
+            ref={buttonRef}
+            className={card.id === this.dependencyCardId && 'selected'}
+          >
             {cardService.getCardDependencyText(this.dependencyCardId, card.id)}
           </button>
           {Array.from(card.dependencies).map((dependencyId) => (

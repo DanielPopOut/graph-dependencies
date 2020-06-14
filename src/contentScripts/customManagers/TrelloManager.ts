@@ -51,7 +51,6 @@ export class TrelloManager extends AbstractManager {
     try {
       if (parseInt(remainingUrl[0], 10)) {
         ticketDifficulty = '' + parseInt(remainingUrl[0], 10);
-        console.log('tickedif', ticketDifficulty, remainingUrl);
       }
     } catch (e) {}
 
