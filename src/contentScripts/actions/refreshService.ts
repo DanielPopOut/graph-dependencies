@@ -8,7 +8,7 @@ const TIME_MS_TO_WAIT_BEFORE_UPDATE = 5000;
 
 const refreshAllActions = () => {
   actionsManager.addRefreshActionsButton();
-  actionsManager.initializeActions(true);
+  actionsManager.updateAfterDOMChanges();
   lastUpdateTime = new Date().getTime();
   updateReferenceTimeout = null;
 };

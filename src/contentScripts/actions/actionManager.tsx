@@ -127,25 +127,27 @@ class ActionsManager {
     actionsManager.refreshCardsActions();
   };
 
-  initializeActions = (isAutoUpdate: boolean = false) => {
-    this.addRefreshActionsButton();
-    if (isAutoUpdate) {
-      if (!this.areActionsFirstInitialized) {
-        return;
-      }
-      cardManager.refresh();
-      if (
-        cardManager.cards.length !==
-        document.querySelectorAll('.card-actions').length
-      ) {
-        document
-          .querySelectorAll('.div-graph-dep-action')
-          .forEach((el) => el.remove());
-        this.restoreConfiguraton(StorageService.getLocalStorageConfiguration());
-      }
+  updateAfterDOMChanges = () => {
+    if (!document.querySelector('.refresh-action-div')) {
+      this.addRefreshActionsButton();
+    }
+    if (!this.areActionsFirstInitialized) {
       return;
     }
+    if (
+      cardManager.cards.length !==
+      document.querySelectorAll('.card-actions').length
+    ) {
+      this.initializeActions();
+    }
+  };
+
+  initializeActions = () => {
     this.areActionsFirstInitialized = true;
+    document
+      .querySelectorAll('.div-graph-dep-action')
+      .forEach((el) => el.remove());
+    this.addRefreshActionsButton();
     cardManager.refresh();
     this.restoreConfiguraton(StorageService.getLocalStorageConfiguration());
   };
