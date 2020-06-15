@@ -8,15 +8,9 @@ import { actionsManager } from '../actions/actionManager';
 
 const calculateCardColor = (
   card: ICard,
-  doneListName: string,
-  startListName: string,
+  listColors: Record<string, string>,
 ) => {
-  if (card.listName === doneListName) {
-    return '#90ee90';
-  } else if (card.listName !== startListName) {
-    return '#FFD39E';
-  }
-  return '#ffffff';
+  return listColors[card.listName] || '#FFFFFF';
 };
 
 class DrawingHelper {
@@ -90,11 +84,7 @@ class DrawingHelper {
       h: h + 2 * padding,
       radius: 6,
       ctx: ctx,
-      color: calculateCardColor(
-        data,
-        actionsManager.doneListName,
-        actionsManager.startListName,
-      ),
+      color: calculateCardColor(data, actionsManager.listColors),
     });
     const cardNumberWidth = this.drawCardNumber({
       x: topLeftX,

@@ -19,3 +19,33 @@
 .card-actions button.selected {
   background-color: #ffc1c1;
 }
+
+.list-actions {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list-actions button {
+  background-color: #c9b6b5;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.list-actions button.selected {
+  background-color: #6b4f4d;
+  padding-right: 50px;
+}
+
+input[type='color'].list-actions-color-input {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  flex-shrink: 0;
+  box-shadow: none;
+  background-color: transparent;
+  position: absolute;
+  right: 5px;
+}

@@ -14,8 +14,7 @@ class ActionsManager {
   areActionsFirstInitialized: boolean = false; // In order to refresh actions on cards on body changes with mutation observer
   dependencyCardId: string;
   selectedLists = new Set<string>();
-  startListName = '';
-  doneListName = '';
+  listColors: Record<string, string> = {};
 
   toggleList = (listName: string) => {
     this.selectedLists.has(listName)
@@ -48,8 +47,7 @@ class ActionsManager {
         {
           dependencies,
           selectedLists: Array.from(this.selectedLists),
-          doneListName: this.doneListName,
-          startListName: this.startListName,
+          listColors: this.listColors,
         },
         copyConfig,
       );
@@ -116,12 +114,10 @@ class ActionsManager {
   restoreConfiguraton = ({
     dependencies,
     selectedLists,
-    doneListName,
-    startListName,
+    listColors,
   }: IStorageData) => {
     this.selectedLists = new Set(selectedLists);
-    this.doneListName = doneListName;
-    this.startListName = startListName;
+    this.listColors = listColors || {};
     this.refreshListActions(cardManager.lists);
     dependencyManager.renderDependencies(dependencies);
     actionsManager.refreshCardsActions();
@@ -152,7 +148,7 @@ class ActionsManager {
     this.restoreConfiguraton(StorageService.getLocalStorageConfiguration());
   };
 
-  refreshListActions = (lists: IList[]) => {
+  refreshListActions = (lists: IList[] = cardManager.lists) => {
     document.querySelectorAll('.list-actions').forEach((el) => el.remove());
     lists.forEach((list) => this.addActionButtonToList(list));
   };
@@ -162,34 +158,29 @@ class ActionsManager {
     const ListDependenciesButton = () => (
       <>
         <button
-          className='bar'
+          className={isListSelected && 'selected'}
           id={list.name}
           onClick={() => {
             this.toggleList(list.name);
           }}
         >
-          {isListSelected ? 'LIST SELECTED' : 'SELECT THIS LIST'}
+          {isListSelected ? (
+            <>
+              LIST SELECTED{' '}
+              <input
+                type='color'
+                className='list-actions-color-input'
+                onChange={(e) => {
+                  this.listColors[list.name] = e.target.value;
+                  this.refreshListActions();
+                }}
+                value={this.listColors[list.name] || '#ffffff'}
+              />
+            </>
+          ) : (
+            'SELECT THIS LIST'
+          )}
         </button>
-        <span
-          className='list-actions-span'
-          onClick={() => {
-            this.startListName = list.name;
-            this.onListChange();
-          }}
-        >
-          <input type='checkbox' checked={this.startListName === list.name} />
-          Start
-        </span>
-        <span
-          className='list-actions-span'
-          onClick={() => {
-            this.doneListName = list.name;
-            this.onListChange();
-          }}
-        >
-          <input type='checkbox' checked={this.doneListName === list.name} />
-          Done
-        </span>
       </>
     );
     ReactDOMAppendChild(<ListDependenciesButton />, list.actionInsertElement, {

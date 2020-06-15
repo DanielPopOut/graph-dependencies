@@ -27,7 +27,7 @@ export const ReactDOMAppendChild = (
 ) => {
   const divContainer = customCreateElement('div', options || {});
   divContainer.addEventListener('click', (e) => {
-    e.preventDefault();
+    // e.preventDefault();
   });
   ReactDOM.render(element, divContainer);
   if (options?.insertAfter) {

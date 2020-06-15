@@ -21,8 +21,7 @@ export const StorageService = {
     return {
       dependencies: {},
       selectedLists: [],
-      doneListName: '',
-      startListName: '',
+      listColors: {},
     };
   },
 
