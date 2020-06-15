@@ -7,6 +7,7 @@ import { DependencyTag } from './components/DependencyTag';
 import { dependencyManager } from '../dependencyGraph/dependencyManager';
 import { AbstractManager } from '../customManagers/AbstractManager';
 import { StorageService } from './storageService';
+import { useDebounce } from '../utils/useDebounce';
 
 declare var cardManager: AbstractManager;
 
@@ -155,34 +156,47 @@ class ActionsManager {
 
   addActionButtonToList = (list: IList) => {
     const isListSelected = this.selectedLists.has(list.name);
-    const ListDependenciesButton = () => (
-      <>
-        <button
-          className={isListSelected && 'selected'}
-          id={list.name}
-          onClick={() => {
-            this.toggleList(list.name);
-          }}
-        >
-          {isListSelected ? (
-            <>
-              LIST SELECTED{' '}
-              <input
-                type='color'
-                className='list-actions-color-input'
-                onChange={(e) => {
-                  this.listColors[list.name] = e.target.value;
-                  this.refreshListActions();
-                }}
-                value={this.listColors[list.name] || '#ffffff'}
-              />
-            </>
-          ) : (
-            'SELECT THIS LIST'
-          )}
-        </button>
-      </>
-    );
+    const ListDependenciesButton = () => {
+      const initialColor = this.listColors[list.name] || '#ffffff';
+      const [color, setColor] = React.useState(
+        this.listColors[list.name] || '#ffffff',
+      );
+      const debouncedColor = useDebounce(color, 1200);
+      useEffect(
+        () => {
+          if (debouncedColor !== initialColor) {
+            this.listColors[list.name] = debouncedColor;
+            this.refreshListActions();
+          }
+        },
+        [debouncedColor], // Only call effect if debounced search term changes
+      );
+      return (
+        <>
+          <button
+            className={isListSelected && 'selected'}
+            id={list.name}
+            onClick={() => {
+              this.toggleList(list.name);
+            }}
+          >
+            {isListSelected ? (
+              <>
+                LIST SELECTED{' '}
+                <input
+                  type='color'
+                  className='list-actions-color-input'
+                  onChange={(e) => setColor(e.target.value)}
+                  value={this.listColors[list.name] || '#ffffff'}
+                />
+              </>
+            ) : (
+              'SELECT THIS LIST'
+            )}
+          </button>
+        </>
+      );
+    };
     ReactDOMAppendChild(<ListDependenciesButton />, list.actionInsertElement, {
       className: `list-actions`,
     });
