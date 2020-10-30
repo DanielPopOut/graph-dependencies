@@ -32,13 +32,16 @@ The library used to create the graph is cytoscape.js (https://js.cytoscape.org/)
 - Cards position on graph will be improved
 - Card will be grouped by label
 
+v2.8:
+
+- Fix decodeURI error --> https://github.com/DanielPopOut/graph-dependencies/issues/3
+
 v2.7:
 
 - Improve action button colors and UX
 - Auto refresh card actions and list actions if DOM is changed
 - Remove start and done column
 - Let the use choose specific color for each column
-
 
 v2.6:
 

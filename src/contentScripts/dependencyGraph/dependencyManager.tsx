@@ -1,9 +1,9 @@
 import React from 'react';
 import { actionsManager } from '../actions/actionManager';
-import { createDependencyGraph } from './createDependencyGraph';
-import { ReactDOMAppendChild } from '../utils/customCreateElement';
-import { calculateCardHeight } from './textWidthHelper';
 import { AbstractManager } from '../customManagers/AbstractManager';
+import { ReactDOMAppendChild } from '../utils/customCreateElement';
+import { createDependencyGraph } from './createDependencyGraph';
+import { calculateCardHeight } from './textWidthHelper';
 
 declare var cardManager: AbstractManager;
 
@@ -91,14 +91,21 @@ class DependencyManager {
     const allCards = Object.values(cardDependencies);
     const nodes = allCards.map((card) => {
       const completeCard = cardsById[card.id];
+      let cardName = completeCard.cardName;
+      let label = [completeCard.cardNumber, completeCard.cardName].join(' ');
+      try {
+        cardName = decodeURI(cardName);
+        label = decodeURI(label);
+      } catch (e) {
+        console.error(e);
+        console.error('error occured with', cardName, label);
+      }
       return {
         data: {
           id: completeCard.id,
           ...completeCard,
-          cardName: decodeURI(completeCard.cardName),
-          label: decodeURI(
-            [completeCard.cardNumber, completeCard.cardName].join(' '),
-          ),
+          cardName: cardName,
+          label: label,
           height: calculateCardHeight(completeCard),
         },
         classes: 'center-center',
